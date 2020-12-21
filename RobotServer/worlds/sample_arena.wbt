@@ -1,0 +1,41 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  basicTimeStep 16
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation -0.5476544639986134 0.8050589809010955 0.22793557276757162 0.927069180491167
+  position 0.8785490500811439 0.7990342304638172 0.9642363316440267
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorTileSize 0.25 0.25
+  wallHeight 0.05
+}
+WoodenBox {
+  translation -0.1812189044088751 0.049960760000000014 0.16117108962839843
+  rotation 1.6938511003935703e-18 -1 -4.9838347109632355e-17 0.34458380465671706
+  size 0.1 0.1 0.1
+  mass 0.2
+}
+WoodenBox {
+  translation -0.29229999995202144 0.049960760000000014 -0.34059999989771533
+  rotation 9.873080173499839e-18 -1 -7.97026629964234e-18 0.34679999999999994
+  name "wooden box(1)"
+  size 0.1 0.1 0.1
+  mass 0.2
+}
+WoodenBox {
+  translation 0.22960000004797007 0.049960760000000014 -0.23159999989771113
+  rotation -2.1254673336415777e-18 -1 1.9311876037616058e-17 0.34688418883387273
+  name "wooden box(2)"
+  size 0.1 0.1 0.1
+  mass 0.2
+}
+DEF Supervisor Robot {
+  controller "supervisor"
+  supervisor TRUE
+}
