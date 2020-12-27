@@ -7,6 +7,7 @@ import json
 import socket
 import sys
 import threading
+import traceback
 
 CONTROLLER_MSG_BUFFER_SIZE = 256
 
@@ -55,7 +56,7 @@ def runClientConnection(connection, client):
             # Receive a request
             requestBytes = connection.recv(CONTROLLER_MSG_BUFFER_SIZE)
             request = bytes.decode(requestBytes)
-            
+            print("got request: " + request)
             # Process the request
             handleRequest(request)
             
@@ -66,6 +67,7 @@ def runClientConnection(connection, client):
             # In the case of any exception, close the connection
             # Add more fault tolerance here if necessary
             print(ex)
+            traceback.print_exception(ex)
             print("[TCP Robot {}] Connection error. Closing connection to {}".format(ROBOT_ID, client))
             connection.close()
             return
