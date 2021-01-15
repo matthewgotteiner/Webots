@@ -10,6 +10,7 @@ DEF RobotTemplate Robot {
       device [
         RotationalMotor {
           name "Motor1"
+          maxVelocity 50
         }
       ]
       endPoint Solid {
@@ -44,6 +45,7 @@ DEF RobotTemplate Robot {
       device [
         RotationalMotor {
           name "Motor2"
+          maxVelocity 50
         }
       ]
       endPoint Solid {
@@ -78,6 +80,7 @@ DEF RobotTemplate Robot {
       device [
         RotationalMotor {
           name "Motor3"
+          maxVelocity 50
         }
       ]
       endPoint Solid {
@@ -112,6 +115,7 @@ DEF RobotTemplate Robot {
       device [
         RotationalMotor {
           name "Motor4"
+          maxVelocity 50
         }
       ]
       endPoint Solid {

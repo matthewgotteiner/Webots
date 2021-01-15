@@ -23,10 +23,12 @@ def put_motors():
     requestData = request.json
     for motor_dict in requestData['motors']:
         motor_id = motor_dict["id"]
-        value = motor_dict["val"]
         if motor_id in motor_map:
             motor = motor_map[motor_id]
-            motor.setVelocity(float(value))
+            # TODO: handle other modes of setting motor output
+            throttlePercent = motor_dict.get("val")
+            if throttlePercent:
+                motor.setVelocity(float(throttlePercent * motor.getMaxVelocity()))
         else:
             raise Exception(f"No motor named {motor_id} found")
 
