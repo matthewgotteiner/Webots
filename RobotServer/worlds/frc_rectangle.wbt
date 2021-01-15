@@ -43,6 +43,6 @@ WoodenBox {
   mass 0.2
 }
 DEF Supervisor Robot {
-  controller "supervisor"
+  controller "http_supervisor"
   supervisor TRUE
 }
