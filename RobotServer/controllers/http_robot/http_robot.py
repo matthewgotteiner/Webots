@@ -2,6 +2,7 @@ import threading
 import sys                             
 import logging
 import time
+import json
 
 from flask import Flask, request       
 from controller import Robot    
@@ -32,7 +33,21 @@ def put_motors():
         else:
             raise Exception(f"No motor named {motor_id} found")
 
-    return "ack"
+
+    # return sensor data
+    sensors = []
+    response_data = {
+        "Sensors": sensors
+    }
+    for distance_sensor in distance_sensors:
+        sensors.append({
+            "ID": distance_sensor.getName(),
+            "Payload": {
+                "Distance": distance_sensor.getValue()
+            }
+        })
+    
+    return json.dumps(response_data)
 
 def build_motor_map(robot):
     # Initialize motors
@@ -48,7 +63,16 @@ def build_motor_map(robot):
             motor.setVelocity(0)
     return result
 
-
+def build_distance_sensor_list(robot):
+    result = []
+    for i in range(1, 50):
+        name = f"Analog{i}"
+        distanceSensor = robot.getDistanceSensor(name)
+        if distanceSensor:
+            distanceSensor.enable(timestep)
+            result.append(distanceSensor)
+    return result
+        
 
 def start_flask():
     global app
@@ -70,6 +94,7 @@ if __name__ == "__main__":
 
     print("Starting flask server")
     motor_map = build_motor_map(robot)
+    distance_sensors = build_distance_sensor_list(robot)
     threading.Thread(target=start_flask).start()
 
     # Run the simulation loop

@@ -156,7 +156,7 @@ DEF RobotTemplate Robot {
           }
         }
       ]
-      name "BLUE distance sensor"
+      name "Analog1"
       lookupTable [
         0 0 0
         100 100 0
@@ -175,7 +175,7 @@ DEF RobotTemplate Robot {
           }
         }
       ]
-      name "RED distance sensor"
+      name "Analog2"
       lookupTable [
         0 0 0
         100 100 0
