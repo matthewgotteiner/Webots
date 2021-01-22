@@ -3,6 +3,8 @@ import sys
 import logging
 import time
 import json
+import itertools
+from collections import defaultdict
 
 from flask import Flask, request       
 from controller import Node, Robot
@@ -37,23 +39,34 @@ def put_motors():
             raise Exception(f"No motor named {request_motor_id} found")
 
     # return sensor data
-    return json.dumps({
-        "Sensors": [
-            {
-                "ID": get_device_id(distance_sensor),
-                "Payload": {
-                    "Distance": distance_sensor.getValue()
-                }
+
+    distance_sensor_values = [{
+            "ID": get_device_id(distance_sensor),
+            "Payload": {
+                "Distance": distance_sensor.getValue()
             }
-            for distance_sensor in device_map["DistanceSensors"].values()
-        ]
+        }
+        for distance_sensor in device_map["DistanceSensors"].values()
+    ]
+
+    position_sensor_values = [{
+            "ID": get_device_id(position_sensor),
+            "Payload": {
+                "EncoderTicks": position_sensor.getValue()
+            }
+        }
+        for position_sensor in device_map["PositionSensors"].values()
+    ]
+
+    return json.dumps({
+        "Sensors": list(itertools.chain(
+            distance_sensor_values,
+            position_sensor_values
+        ))
     })
     
 def build_device_map(robot):
-    device_map = {
-        "Motors": {},
-        "DistanceSensors": {}
-    }
+    device_map = defaultdict(dict)
 
     device_count = robot.getNumberOfDevices()
     for i in range(device_count):
@@ -66,11 +79,13 @@ def build_device_map(robot):
             device.setPosition(float("inf"))
             device.setVelocity(0)
             device_map["Motors"][device_id] = device
-
         elif device_type == Node.DISTANCE_SENSOR:
             # Initialize the distance sensor with an update frequency
             device.enable(timestep)
             device_map["DistanceSensors"][device_id] = device
+        elif device_type == Node.POSITION_SENSOR:
+            device.enable(timestep)
+            device_map["PositionSensors"][device_id] = device
 
     return device_map
 
