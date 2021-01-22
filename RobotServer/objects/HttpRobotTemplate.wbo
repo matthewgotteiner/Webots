@@ -1,5 +1,7 @@
 #VRML_OBJ R2021a utf8
 DEF RobotTemplate Robot {
+  translation 2.8443388164002488e-12 -1.8367728249428692e-08 -0.013902311876438977
+  rotation 0.999999980902263 0.00015048523489597006 0.00012469830581189045 -5.299786968462981e-06
   children [
     Transform {
       translation 0 0 0.8128
@@ -16,65 +18,79 @@ DEF RobotTemplate Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 3.656510691791486e-07
+        position 3.430894836904035e-07
         anchor -0.3683 0.35 0.0762
       }
       device [
+        PositionSensor {
+          name "CAN1 #"
+        }
         RotationalMotor {
           name "Motor1 # front left"
           maxVelocity 50
         }
       ]
       endPoint RobotWheel {
-        translation -0.3683 0.349816 0.0797337
+        translation -0.3683 0.3498160000797259 0.07973370000415134
+        rotation -1 0 0 2.9802322387695313e-08
         name "FL Wheel"
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 1.0792643952862534e-08
+        position 1.2266253874234143e-08
         anchor 0.3683 0.35 0.0761856
       }
       device [
+        PositionSensor {
+          name "CAN2 #"
+        }
         RotationalMotor {
           name "Motor2 # front right"
           maxVelocity 50
         }
       ]
       endPoint RobotWheel {
-        translation 0.3683 0.350012 0.0797337
+        translation 0.3683 0.35001199999477145 0.0797337000000177
         name "FR Wheel"
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position -8.85145029509448e-11
+        position -8.75277265951556e-11
         anchor -0.3683 -0.35 0.0761856
       }
       device [
+        PositionSensor {
+          name "CAN3 #"
+        }
         RotationalMotor {
           name "Motor3 # back left"
           maxVelocity 50
         }
       ]
       endPoint RobotWheel {
-        translation -0.3683 -0.3499999999984301 0.0797325
+        translation -0.3683 -0.34999999999811965 0.0797325
+        rotation 0.4043832870637698 -0.9145896100415567 4.845135987322454e-05 9.86749687334645e-13
         name "BL wheel"
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 2.913842280909397e-09
+        position 4.387069634291414e-09
         anchor 0.3683 -0.35 0.0761856
       }
       device [
+        PositionSensor {
+          name "CAN4 #"
+        }
         RotationalMotor {
           name "Motor4 # back right"
           maxVelocity 50
         }
       ]
       endPoint RobotWheel {
-        translation 0.3683 -0.349988 0.0797325
+        translation 0.3683 -0.3499880000052254 0.07973250000001766
         name "BR wheel"
       }
     }
@@ -137,4 +153,6 @@ DEF RobotTemplate Robot {
     mass 50
   }
   controller "http_robot"
+  linearVelocity -2.1749668032670013e-12 2.2147378370645768e-09 -5.139722393839786e-06
+  angularVelocity -2.7444043959346537e-09 -2.6796000377586693e-12 1.5725153909892648e-13
 }
