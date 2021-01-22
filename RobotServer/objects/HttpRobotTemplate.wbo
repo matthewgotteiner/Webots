@@ -3,6 +3,9 @@ DEF RobotTemplate Robot {
   translation 2.8443388164002488e-12 -1.8367728249428692e-08 -0.013902311876438977
   rotation 0.999999980902263 0.00015048523489597006 0.00012469830581189045 -5.299786968462981e-06
   children [
+    InertialUnit {
+      name "IMU1"
+    }
     Transform {
       translation 0 0 0.8128
       children [

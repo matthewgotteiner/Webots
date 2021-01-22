@@ -58,10 +58,22 @@ def put_motors():
         for position_sensor in device_map["PositionSensors"].values()
     ]
 
+    imu_sensor_values =  [{
+            "ID": get_device_id(imu),
+            "Payload": {
+                "Roll": imu.getRollPitchYaw()[0],
+                "Pitch": imu.getRollPitchYaw()[1],
+                "Yaw": imu.getRollPitchYaw()[2],
+            }
+        }
+        for imu in device_map["IMUs"].values()
+    ]
+
     return json.dumps({
         "Sensors": list(itertools.chain(
             distance_sensor_values,
-            position_sensor_values
+            position_sensor_values,
+            imu_sensor_values
         ))
     })
     
@@ -86,6 +98,9 @@ def build_device_map(robot):
         elif device_type == Node.POSITION_SENSOR:
             device.enable(timestep)
             device_map["PositionSensors"][device_id] = device
+        elif device_type == Node.INERTIAL_UNIT:
+            device.enable(timestep)
+            device_map["IMUs"][device_id] = device
 
     return device_map
 
