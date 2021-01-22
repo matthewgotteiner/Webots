@@ -1,11 +1,23 @@
-#VRML_OBJ R2020b utf8
+#VRML_OBJ R2021a utf8
 DEF RobotTemplate Robot {
-  translation 0 0.1 0
-  rotation 0 0 0.9999999999981728 0
   children [
+    Transform {
+      translation 0 0 0.8128
+      children [
+        Shape {
+          appearance PBRAppearance {
+            metalness 0
+          }
+          geometry Box {
+            size 0.7112 0.9652 1.524
+          }
+        }
+      ]
+    }
     HingeJoint {
       jointParameters HingeJointParameters {
-        anchor 0.055 -0.05 0.03
+        position 3.656510691791486e-07
+        anchor -0.3683 0.35 0.0762
       }
       device [
         RotationalMotor {
@@ -13,33 +25,15 @@ DEF RobotTemplate Robot {
           maxVelocity 50
         }
       ]
-      endPoint Solid {
-        translation 0.055 -0.049999999999999996 0.03
-        rotation 2.1677375009475573e-10 -2.1677484915673805e-10 1 1.5707999999999998
-        children [
-          Shape {
-            appearance PBRAppearance {
-              baseColor 0.1 0.1 0.1
-              metalness 0
-            }
-            geometry Cylinder {
-              height 0.005
-              radius 0.015
-            }
-          }
-        ]
-        name "FL wheel"
-        boundingObject Cylinder {
-          height 0.005
-          radius 0.015
-        }
-        physics Physics {
-        }
+      endPoint RobotWheel {
+        translation -0.3683 0.349816 0.0797337
+        name "FL Wheel"
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        anchor -0.055 -0.05 0.03
+        position 1.0792643952862534e-08
+        anchor 0.3683 0.35 0.0761856
       }
       device [
         RotationalMotor {
@@ -47,33 +41,15 @@ DEF RobotTemplate Robot {
           maxVelocity 50
         }
       ]
-      endPoint Solid {
-        translation -0.055 -0.049999999999999996 0.03
-        rotation -2.1065177729667717e-16 2.8915645309091366e-16 1 1.5708000000000004
-        children [
-          Shape {
-            appearance PBRAppearance {
-              baseColor 0.1 0.1 0.1
-              metalness 0
-            }
-            geometry Cylinder {
-              height 0.005
-              radius 0.015
-            }
-          }
-        ]
-        name "FR wheel"
-        boundingObject Cylinder {
-          height 0.005
-          radius 0.015
-        }
-        physics Physics {
-        }
+      endPoint RobotWheel {
+        translation 0.3683 0.350012 0.0797337
+        name "FR Wheel"
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        anchor 0.055 -0.05 -0.03
+        position -8.85145029509448e-11
+        anchor -0.3683 -0.35 0.0761856
       }
       device [
         RotationalMotor {
@@ -81,33 +57,15 @@ DEF RobotTemplate Robot {
           maxVelocity 50
         }
       ]
-      endPoint Solid {
-        translation 0.055 -0.049999999999999996 -0.03
-        rotation -2.6625852813400394e-16 2.6625892943082133e-16 1 1.5707999999999998
-        children [
-          Shape {
-            appearance PBRAppearance {
-              baseColor 0.1 0.1 0.1
-              metalness 0
-            }
-            geometry Cylinder {
-              height 0.005
-              radius 0.015
-            }
-          }
-        ]
+      endPoint RobotWheel {
+        translation -0.3683 -0.3499999999984301 0.0797325
         name "BL wheel"
-        boundingObject Cylinder {
-          height 0.005
-          radius 0.015
-        }
-        physics Physics {
-        }
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        anchor -0.055 -0.05 -0.03
+        position 2.913842280909397e-09
+        anchor 0.3683 -0.35 0.0761856
       }
       device [
         RotationalMotor {
@@ -115,41 +73,21 @@ DEF RobotTemplate Robot {
           maxVelocity 50
         }
       ]
-      endPoint Solid {
-        translation -0.055 -0.049999999999999996 -0.03
-        rotation -2.101542027057431e-16 2.1015468628306926e-16 1 1.570800000000001
-        children [
-          Shape {
-            appearance PBRAppearance {
-              baseColor 0.1 0.1 0.1
-              metalness 0
-            }
-            geometry Cylinder {
-              height 0.005
-              radius 0.015
-            }
-          }
-        ]
+      endPoint RobotWheel {
+        translation 0.3683 -0.349988 0.0797325
         name "BR wheel"
-        boundingObject Cylinder {
-          height 0.005
-          radius 0.015
-        }
-        physics Physics {
-        }
       }
     }
     DistanceSensor {
-      translation 0 -0.03 0.055
-      rotation 0 1 0 -1.5708
+      translation 0.3683 0 0.1
       children [
         Shape {
           appearance PBRAppearance {
-            baseColor 0 0 1
+            baseColor 1 0 0
             metalness 0
           }
           geometry Box {
-            size 0.01 0.01 0.01
+            size 0.0254 0.05 0.05
           }
         }
       ]
@@ -160,15 +98,16 @@ DEF RobotTemplate Robot {
       ]
     }
     DistanceSensor {
-      translation 0.055 -0.03 0
+      translation 0 0.4953 0.1
+      rotation 0 0 -1 -1.5708
       children [
         Shape {
           appearance PBRAppearance {
-            baseColor 1 0 0
+            baseColor 0 0 1
             metalness 0
           }
           geometry Box {
-            size 0.01 0.01 0.01
+            size 0.0254 0.05 0.05
           }
         }
       ]
@@ -178,23 +117,24 @@ DEF RobotTemplate Robot {
         100 100 0
       ]
     }
-    Shape {
-      appearance PBRAppearance {
-        metalness 0
-      }
-      geometry Box {
-        size 0.1 0.1 0.1
-      }
-    }
   ]
-  name "robot_main"
-  boundingObject Box {
-    size 0.1 0.1 0.1
+  name "basic robot"
+  boundingObject Transform {
+    translation 0 0 0.8128
+    children [
+      Shape {
+        appearance PBRAppearance {
+          metalness 0
+        }
+        geometry Box {
+          size 0.7112 0.9652 1.524
+        }
+      }
+    ]
   }
   physics Physics {
-    centerOfMass [
-      0 0 0
-    ]
+    density -1
+    mass 50
   }
   controller "http_robot"
 }

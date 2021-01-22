@@ -1,0 +1,45 @@
+#VRML_SIM R2021a utf8
+
+PROTO RobotWheel [
+  field SFVec3f    translation 0 0 0
+  field SFRotation rotation    1 0 0 0
+  field SFString   name        "wheel"
+  field SFFloat    height      0.0254
+  field SFFloat    radius      0.0762
+  field SFNode     physics     Physics {
+  }
+]
+{
+  Solid {
+    name IS name
+    translation IS translation
+    rotation IS rotation
+    children [
+      Solid {
+        rotation -3.020877119657622e-08 3.022417924414889e-08 0.999999999999999 1.5707963268594616
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.1 0.1 0.1
+              metalness 0
+            }
+            geometry Cylinder {
+              height IS height
+              radius IS radius
+            }
+          }
+        ]
+      }
+    ]
+    boundingObject Transform {
+      rotation -3.020877119657622e-08 3.022417924414889e-08 0.999999999999999 1.5707963268594616
+      children [
+        Cylinder {
+          height IS height
+          radius IS radius
+        }
+      ]
+    }
+    physics IS physics
+  }
+}
