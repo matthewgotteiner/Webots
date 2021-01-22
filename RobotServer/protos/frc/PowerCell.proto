@@ -1,0 +1,41 @@
+
+#VRML_SIM R2021a utf8
+
+PROTO PowerCell [
+  field SFVec3f    translation 0 0 0
+  field SFRotation rotation    1 0 0 0
+  field SFString   name        "power-cell"
+  field SFNode     physics     Physics {
+      density -1
+      mass 0.14174762
+  }
+]
+{
+    Solid {
+    name IS name
+    translation IS translation
+    rotation IS rotation
+    physics IS physics
+    children [
+        Shape {
+            geometry Sphere {
+                radius      0.0889
+                subdivision 2
+            }
+            appearance Appearance {
+                texture ImageTexture {
+                    url "textures/power-cell.png"
+                }
+                material Material {
+                    diffuseColor 1 1 0
+                    shininess 0
+                }
+            }
+        }
+    ]
+    boundingObject Sphere {
+        radius      0.0889
+        subdivision 1
+    }
+    }
+}
