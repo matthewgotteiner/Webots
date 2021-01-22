@@ -33,7 +33,7 @@ def put_motors():
         if motor:
             # TODO: handle other modes of setting motor output
             throttle_percent = request_motor_values.get("val")
-            if throttle_percent:
+            if throttle_percent is not None:
                 motor.setVelocity(float(throttle_percent * motor.getMaxVelocity()))
         else:
             raise Exception(f"No motor named {request_motor_id} found")
