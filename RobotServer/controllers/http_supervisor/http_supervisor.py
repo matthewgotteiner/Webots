@@ -60,14 +60,9 @@ def spawnRobot(robotTemplate):
     controllerArgs.insertMFString(-1, str(nextRobotId))
     controllerArgs.insertMFString(-1, tcpPort)
 
-    # Insert a final controller arg to let the controller know it's ready.
-    # The controller may have already started before any args were set,
-    # but this will signal it to wait, without it having to know how many
-    # args to expect.
-    controllerArgs.insertMFString(-1, "READY")
-
-    # Restart the controller
-    newRobot.restartController()
+    # Finally set the controller
+    controllerField = newRobot.getField("controller")
+    controllerField.setSFString("http_robot")
 
     return tcpPort
 

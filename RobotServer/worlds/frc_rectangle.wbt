@@ -20,4 +20,5 @@ DEF Supervisor Robot {
   rotation 1 0 0 1.5707963267948966
   controller "http_supervisor"
   supervisor TRUE
+  synchronization FALSE
 }

@@ -115,13 +115,6 @@ if __name__ == "__main__":
     robot = Robot()
     timestep = int(robot.getBasicTimeStep())
 
-    # If the controller started before the supervisor inserted all of the args,
-    # just run an empty simulator loop so we don't block the simulation while
-    # we wait for the supervisor to restart this controller
-    if sys.argv[-1] != "READY":
-        while robot.step(timestep) != -1:
-            pass
-
     print("Starting flask server")
     device_map = build_device_map(robot)
     threading.Thread(target=start_flask).start()
@@ -131,5 +124,3 @@ if __name__ == "__main__":
     while robot.step(timestep) != -1:
         time.sleep(timestep / 1000)
     print("Finished")
-
-
