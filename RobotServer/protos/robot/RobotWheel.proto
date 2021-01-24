@@ -16,23 +16,39 @@ PROTO RobotWheel [
     rotation IS rotation
     children [
       Solid {
-        rotation -3.020877119657622e-08 3.022417924414889e-08 0.999999999999999 1.5707963268594616
+        rotation 0 0 1 1.5707963268594616
         children [
           Shape {
             appearance PBRAppearance {
               baseColor 0.1 0.1 0.1
               metalness 0
+              normalMap ImageTexture {
+                url "textures/wheel-normal.png"
+              }
             }
             geometry Cylinder {
               height IS height
               radius IS radius
+              side   FALSE
+            }
+          }
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.1 0.1 0.8
+              metalness 0
+            }
+            geometry Cylinder {
+              height IS height
+              radius IS radius
+              top    FALSE
+              bottom FALSE
             }
           }
         ]
       }
     ]
     boundingObject Transform {
-      rotation -3.020877119657622e-08 3.022417924414889e-08 0.999999999999999 1.5707963268594616
+      rotation 0 0 1 1.5707963268594616
       children [
         Cylinder {
           height IS height

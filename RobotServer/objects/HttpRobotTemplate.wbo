@@ -34,7 +34,7 @@ DEF RobotTemplate Robot {
         }
       ]
       endPoint RobotWheel {
-        translation -0.3683 0.3498160000797259 0.07973370000415134
+        translation -0.3683 0.35 0.0762
         name "FL Wheel"
       }
     }
@@ -53,7 +53,7 @@ DEF RobotTemplate Robot {
         }
       ]
       endPoint RobotWheel {
-        translation 0.3683 0.35001199999477145 0.0797337000000177
+        translation 0.3683 0.35 0.0761856
         name "FR Wheel"
       }
     }
@@ -72,7 +72,7 @@ DEF RobotTemplate Robot {
         }
       ]
       endPoint RobotWheel {
-        translation -0.3683 -0.34999999999811965 0.0797325
+        translation -0.3683 -0.35 0.0761856
         rotation 0.4043832870637698 -0.9145896100415567 4.845135987322454e-05 9.86749687334645e-13
         name "BL wheel"
       }
@@ -92,7 +92,7 @@ DEF RobotTemplate Robot {
         }
       ]
       endPoint RobotWheel {
-        translation 0.3683 -0.3499880000052254 0.07973250000001766
+        translation 0.3683 -0.35 0.0761856
         name "BR wheel"
       }
     }
@@ -157,6 +157,5 @@ DEF RobotTemplate Robot {
       0 0.2 0
     ]
   }
-  controller ""
-  synchronization FALSE
+  controller "http_robot"
 }
