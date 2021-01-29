@@ -28,7 +28,20 @@ DEF RobotTemplate Robot {
         }
         RotationalMotor {
           name "Motor1 # front left"
-          maxVelocity 150
+          maxVelocity 300
+        }
+      ]
+    }
+    MotorizedRobotWheel {
+      translation -0.368275 0 0.071375
+      name "CL Wheel"
+      device [
+        PositionSensor {
+          name "CAN5 #"
+        }
+        RotationalMotor {
+          name "Motor5 # center left"
+          maxVelocity 300
         }
       ]
     }
@@ -41,7 +54,20 @@ DEF RobotTemplate Robot {
         }
         RotationalMotor {
           name "Motor2 # front right"
-          maxVelocity 150
+          maxVelocity 300
+        }
+      ]
+    }
+    MotorizedRobotWheel {
+      translation 0.3683 0 0.0711856
+      name "CR Wheel"
+      device [
+        PositionSensor {
+          name "CAN6 #"
+        }
+        RotationalMotor {
+          name "Motor6 # center right"
+          maxVelocity 300
         }
       ]
     }
@@ -54,7 +80,7 @@ DEF RobotTemplate Robot {
         }
         RotationalMotor {
           name "Motor3 # back left"
-          maxVelocity 150
+          maxVelocity 300
         }
       ]
     }
@@ -67,7 +93,7 @@ DEF RobotTemplate Robot {
         }
         RotationalMotor {
           name "Motor4 # back right"
-          maxVelocity 150
+          maxVelocity 300
         }
       ]
     }
@@ -133,5 +159,4 @@ DEF RobotTemplate Robot {
     ]
   }
   controller "http_robot"
-  supervisor TRUE
 }

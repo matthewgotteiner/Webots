@@ -3,8 +3,8 @@ WorldInfo {
 }
 Viewpoint {
   fieldOfView 1.0472
-  orientation 0.16634609376376233 -0.4196239525182409 -0.8923254538353744 2.296829252417245
-  position -2.901420658547537 2.1222114105911425 3.4778481024093697
+  orientation -0.2912165766312341 -0.5192858164149653 -0.8034520187076684 4.012664949790544
+  position 2.6853132190685294 3.970221158153984 3.097184521272197
 }
 Solid {
   rotation 1 0 0 1.57079632679
@@ -65,7 +65,20 @@ DEF RobotTemplate Robot {
         }
         RotationalMotor {
           name "Motor1 # front left"
-          maxVelocity 150
+          maxVelocity 300
+        }
+      ]
+    }
+    MotorizedRobotWheel {
+      translation -0.368275 0 0.071375
+      name "CL Wheel"
+      device [
+        PositionSensor {
+          name "CAN5 #"
+        }
+        RotationalMotor {
+          name "Motor5 # center left"
+          maxVelocity 300
         }
       ]
     }
@@ -78,7 +91,20 @@ DEF RobotTemplate Robot {
         }
         RotationalMotor {
           name "Motor2 # front right"
-          maxVelocity 150
+          maxVelocity 300
+        }
+      ]
+    }
+    MotorizedRobotWheel {
+      translation 0.3683 0 0.0711856
+      name "CR Wheel"
+      device [
+        PositionSensor {
+          name "CAN6 #"
+        }
+        RotationalMotor {
+          name "Motor6 # center right"
+          maxVelocity 300
         }
       ]
     }
@@ -91,7 +117,7 @@ DEF RobotTemplate Robot {
         }
         RotationalMotor {
           name "Motor3 # back left"
-          maxVelocity 150
+          maxVelocity 300
         }
       ]
     }
@@ -104,7 +130,7 @@ DEF RobotTemplate Robot {
         }
         RotationalMotor {
           name "Motor4 # back right"
-          maxVelocity 150
+          maxVelocity 300
         }
       ]
     }
