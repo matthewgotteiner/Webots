@@ -1,6 +1,13 @@
 #VRML_SIM R2021a utf8
 WorldInfo {
   basicTimeStep 16
+  contactProperties [
+    ContactProperties {
+      coulombFriction [
+        3
+      ]
+    }
+  ]
 }
 Viewpoint {
   orientation 0.30273133721988793 0.46076595338470333 0.8342951957589975 2.030309012209308
