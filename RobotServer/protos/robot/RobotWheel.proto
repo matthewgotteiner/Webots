@@ -36,6 +36,13 @@ PROTO RobotWheel [
             appearance PBRAppearance {
               baseColor 0.1 0.1 0.8
               metalness 0
+              roughness 0.8
+              normalMap ImageTexture {
+                url "textures/wheel-tire-normal.png"
+              }
+              textureTransform TextureTransform {
+                scale 4 1
+              }
             }
             geometry Cylinder {
               height IS height

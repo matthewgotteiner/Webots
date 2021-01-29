@@ -1,0 +1,29 @@
+#VRML_SIM R2021a utf8
+
+PROTO MotorizedRobotWheel [
+  field SFVec3f    translation 0 0 0
+  field SFRotation rotation    1 0 0 0
+  field SFString   name        "wheel"
+  field SFFloat    height      0.0254
+  field SFFloat    radius      0.0762
+  field MFNode{RotationalMotor{}, PositionSensor{}, Brake{}}     device      NULL
+  field SFNode     physics     Physics {
+  }
+]
+{
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 0
+        anchor IS translation
+      }
+      device IS device
+      endPoint RobotWheel {
+        translation IS translation
+        rotation IS rotation
+        name IS name
+        physics IS physics
+        height IS height
+        radius IS radius
+      }
+    }
+}

@@ -19,11 +19,9 @@ DEF RobotTemplate Robot {
         }
       ]
     }
-    HingeJoint {
-      jointParameters HingeJointParameters {
-        position 3.430894836904035e-07
-        anchor -0.3683 0.35 0.0762
-      }
+    MotorizedRobotWheel {
+      translation -0.3683 0.35 0.0762
+      name "FL Wheel"
       device [
         PositionSensor {
           name "CAN1 #"
@@ -33,16 +31,10 @@ DEF RobotTemplate Robot {
           maxVelocity 150
         }
       ]
-      endPoint RobotWheel {
-        translation -0.3683 0.35 0.0762
-        name "FL Wheel"
-      }
     }
-    HingeJoint {
-      jointParameters HingeJointParameters {
-        position 1.2266253874234143e-08
-        anchor 0.3683 0.35 0.0761856
-      }
+    MotorizedRobotWheel {
+      translation 0.3683 0.35 0.0761856
+      name "FR Wheel"
       device [
         PositionSensor {
           name "CAN2 #"
@@ -52,16 +44,10 @@ DEF RobotTemplate Robot {
           maxVelocity 150
         }
       ]
-      endPoint RobotWheel {
-        translation 0.3683 0.35 0.0761856
-        name "FR Wheel"
-      }
     }
-    HingeJoint {
-      jointParameters HingeJointParameters {
-        position -8.75277265951556e-11
-        anchor -0.3683 -0.35 0.0761856
-      }
+    MotorizedRobotWheel {
+      translation -0.3683 -0.35 0.0761856
+      name "BL wheel"
       device [
         PositionSensor {
           name "CAN3 #"
@@ -71,17 +57,10 @@ DEF RobotTemplate Robot {
           maxVelocity 150
         }
       ]
-      endPoint RobotWheel {
-        translation -0.3683 -0.35 0.0761856
-        rotation 0.4043832870637698 -0.9145896100415567 4.845135987322454e-05 9.86749687334645e-13
-        name "BL wheel"
-      }
     }
-    HingeJoint {
-      jointParameters HingeJointParameters {
-        position 4.387069634291414e-09
-        anchor 0.3683 -0.35 0.0761856
-      }
+    MotorizedRobotWheel {
+      translation 0.3683 -0.35 0.0761856
+      name "BR wheel"
       device [
         PositionSensor {
           name "CAN4 #"
@@ -91,10 +70,6 @@ DEF RobotTemplate Robot {
           maxVelocity 150
         }
       ]
-      endPoint RobotWheel {
-        translation 0.3683 -0.35 0.0761856
-        name "BR wheel"
-      }
     }
     DistanceSensor {
       translation 0.3683 0 0.1
