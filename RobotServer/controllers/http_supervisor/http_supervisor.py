@@ -1,25 +1,34 @@
-import threading               
-import sys                             
+from controller import Field, Node, Robot, Supervisor
+from flask import Flask, request
 import logging
-import time
 from os import path
-
-from flask import Flask, request       
-from controller import Robot    
-from controller import Field
-from controller import Node
-from controller import Supervisor
+import socket
+import sys
+import threading
+import time
 
 # flask log level
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
 SUPERVISOR_PORT = 10001
-tcpPortsAvailable = [str(port) for port in range(SUPERVISOR_PORT + 6, SUPERVISOR_PORT, -1)]
-tcpPortsInUse = []
-nextRobotId = 0
+tcp_ports_available = [str(port) for port in range(SUPERVISOR_PORT + 6, SUPERVISOR_PORT, -1)]
+tcp_ports_in_use = []
+next_robot_id = 0
 app = Flask(__name__)
 supervisor = Supervisor()
+
+def get_public_ip():
+    try:
+        # In case there are multiple network interfaces,
+        # get the public IP address by connecting to Google.
+        probe_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        probe_socket.connect(("8.8.8.8", 80))
+        ip = probe_socket.getsockname()[0]
+        probe_socket.close()
+        return ip
+    except:
+        return '127.0.0.1'
 
 @app.route("/ping")
 def ping():
@@ -28,52 +37,53 @@ def ping():
 
 @app.route("/robot", methods=['POST'])
 def post_robot():
-    requestData = request.json
-    template = requestData.get("template")
-    port = spawnRobot(template)
+    request_data = request.json
+    template = request_data.get("template")
+    port = spawn_robot(template)
     return str(port)
 
-def spawnRobot(robotTemplate):
-    global supervisor, tcpPortsAvailable, tcpPortsInUse, nextRobotId
+def spawn_robot(robot_template):
+    global supervisor, tcp_ports_available, tcp_ports_in_use, next_robot_id
 
     # Check if there are enough available ports
-    if len(tcpPortsAvailable) == 0:
+    if len(tcp_ports_available) == 0:
         return "Error: TCP ports exhausted. Too many robots."
 
     # Check if the template exists
-    templateFile = "../../objects/{}.wbo".format(robotTemplate)
-    if not path.exists(templateFile):
-        return "Error: robot template '{}' not found.".format(robotTemplate)
+    template_file = "../../objects/{}.wbo".format(robot_template)
+    if not path.exists(template_file):
+        return "Error: robot template '{}' not found.".format(robot_template)
 
     # Claim the next port
-    tcpPort = tcpPortsAvailable.pop()
-    tcpPortsInUse.append(tcpPort)
+    tcp_port = tcp_ports_available.pop()
+    tcp_ports_in_use.append(tcp_port)
 
     # Spawn the robot at the end of the root children list
-    rootChildrenField = Node.getField(supervisor.getRoot(), "children")
-    rootChildrenField.importMFNode(-1, templateFile)
-    newRobot = rootChildrenField.getMFNode(-1)
-    nextRobotId += 1
+    root_children_field = Node.getField(supervisor.getRoot(), "children")
+    root_children_field.importMFNode(-1, template_file)
+    new_robot = root_children_field.getMFNode(-1)
+    next_robot_id += 1
 
     # Pass the robot ID and port as a controller arg
-    controllerArgs = newRobot.getField("controllerArgs")
-    controllerArgs.insertMFString(-1, str(nextRobotId))
-    controllerArgs.insertMFString(-1, tcpPort)
+    controller_args_field = new_robot.getField("controllerArgs")
+    controller_args_field.insertMFString(-1, str(next_robot_id))
+    controller_args_field.insertMFString(-1, tcp_port)
 
     # Finally set the controller
-    controllerField = newRobot.getField("controller")
-    controllerField.setSFString("http_robot")
+    controller_field = new_robot.getField("controller")
+    controller_field.setSFString("http_robot")
 
-    return tcpPort
+    return tcp_port
 
 
 def start_flask():
     global app
-    port = SUPERVISOR_PORT
-    app.run(port=port)
+
+    # Set the host to allow remote connections
+    app.run(host='0.0.0.0', port=SUPERVISOR_PORT)
 
 if __name__ == "__main__":
-    print("Starting supervisor flask server")
+    print(f'[Supervisor] Server listening on http://{get_public_ip()}:{SUPERVISOR_PORT}')
 
     # Run the simulation loop
     timestep = int(supervisor.getBasicTimeStep())

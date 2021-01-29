@@ -1,13 +1,12 @@
-import threading               
-import sys                             
-import logging
-import time
-import json
-import itertools
 from collections import defaultdict
-
-from flask import Flask, request       
 from controller import Node, Supervisor
+from flask import Flask, request
+import itertools
+import json
+import logging
+import sys
+import threading
+import time
 
 app = Flask(__name__)
 
@@ -126,7 +125,9 @@ def start_flask():
     global app
     # TODO: use argparse to clean this up
     port = int(sys.argv[2])
-    app.run(port=port)
+
+    # Set the host to allow remote connections
+    app.run(host='0.0.0.0', port=port)
 
 if __name__ == "__main__":
     # Create the robot
