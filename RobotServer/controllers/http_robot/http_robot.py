@@ -60,9 +60,9 @@ def put_motors():
     imu_sensor_values =  [{
             "ID": get_device_id(imu),
             "Payload": {
-                "Roll": imu.getRollPitchYaw()[0],
+                "Roll": imu.getRollPitchYaw()[2],
                 "Pitch": imu.getRollPitchYaw()[1],
-                "Yaw": imu.getRollPitchYaw()[2],
+                "Yaw": imu.getRollPitchYaw()[0],
             }
         }
         for imu in device_map["IMUs"].values()
