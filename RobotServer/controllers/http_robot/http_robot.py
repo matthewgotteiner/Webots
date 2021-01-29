@@ -85,7 +85,7 @@ def reset_position():
     target_rotation = requestData.get("rotation", [1, 0, 0, 0]) 
     print(f"Resetting position to {target_position} @ {target_rotation}")
 
-    robot_node = robot.getFromDef("RobotTemplate")
+    robot_node = robot.getSelf()
     translation_field = robot_node.getField("translation")
     rotation_field = robot_node.getField("rotation")
 
