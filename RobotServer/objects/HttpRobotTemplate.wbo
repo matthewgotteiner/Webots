@@ -158,5 +158,6 @@ DEF RobotTemplate Robot {
       0 0.2 0
     ]
   }
-  controller "http_robot"
+  controller ""
+  supervisor TRUE
 }
