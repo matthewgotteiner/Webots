@@ -1,0 +1,125 @@
+
+#VRML_SIM R2021a utf8
+
+PROTO PowerPort [
+  field SFVec3f    translation 0 0 0
+  field SFRotation rotation    1 0 0 0
+  field SFString   name        "power-port"
+]
+{
+    Solid {
+        name IS name
+        translation IS translation
+        rotation IS rotation
+        children [
+            Solid {
+                children [
+                    Transform {
+                        scale 0.001 0.001 0.001
+                        children [
+                            DEF SHAPE Shape {
+                                geometry Mesh {
+                                    url "models/power-port.obj"
+                                }
+                                appearance Appearance {
+                                    material Material {
+                                        diffuseColor 0.2 0.2 0.2
+                                        specularColor 1 1 1
+                                        shininess 0.1
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+                physics Physics {
+                    mass 1000
+                    density -1
+                    centerOfMass 0 -0.3048 0
+                }
+                boundingObject Group {
+                    children [
+                        # bottom box
+                        Transform {
+                            translation 0 -0.3048 0.2286
+                            children [
+                                Box {
+                                    size 1.2192 0.6096 0.4572
+                                }
+                            ]
+                        }
+                        # sides
+                        Transform {
+                            translation 0.606425 -0.3048 1.524
+                            children [
+                                Box {
+                                    size 0.00635 0.6096 3.048
+                                }
+                            ]
+                        }
+                        Transform {
+                            translation -0.606425 -0.3048 1.524
+                            children [
+                                Box {
+                                    size 0.00635 0.6096 3.048
+                                }
+                            ]
+                        }
+                        # back
+                        Transform {
+                            translation 0 -0.606425 1.524
+                            children [
+                                Box {
+                                    size 1.2192 0.00635 3.048
+                                }
+                            ]
+                        }
+                        # bottom slope
+                        Transform {
+                            translation 0 -0.3048 0.510944464
+                            rotation 1 0 0 -0.17453292 # -10 deg
+                            children [
+                                Box {
+                                    size 1.2192 0.61900406 0.00635
+                                }
+                            ]
+                        }
+                        # front (below top port)
+                        Transform {
+                            translation 0 0.003175 0.2286
+                            children [
+                                Box {
+                                    size 1.2192 0.00635 0.4572
+                                }
+                            ]
+                        }
+                        Transform {
+                            translation 0.5207 0.003175 1.057275
+                            children [
+                                Box {
+                                    size 0.1778 0.00635 2.11455
+                                }
+                            ]
+                        }
+                        Transform {
+                            translation -0.5207 0.003175 1.057275
+                            children [
+                                Box {
+                                    size 0.1778 0.00635 2.11455
+                                }
+                            ]
+                        }
+                        Transform {
+                            translation 0 0.003175 1.412875
+                            children [
+                                Box {
+                                    size 1.2192 0.00635 1.40335
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
