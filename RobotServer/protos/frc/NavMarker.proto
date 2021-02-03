@@ -1,0 +1,65 @@
+
+#VRML_SIM R2021a utf8
+
+PROTO NavMarker [
+  field SFVec3f    translation 0 0 0
+  field SFRotation rotation    1 0 0 0
+  field SFString   name        "nav-marker"
+  field SFNode     physics     Physics {
+      density -1
+      mass 5
+      centerOfMass 0 0 0.0127
+  }
+]
+{
+    Solid {
+    name IS name
+    translation IS translation
+    rotation IS rotation
+    physics IS physics
+    children [
+        Transform {
+            translation 0 0 0.0762
+            children [
+                Shape {
+                    geometry Box {
+                        size 0.0635 0.0635 0.1524
+                    }
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 0.25 1 0.25
+                            shininess 0
+                        }
+                    }
+                }
+            ]
+        }
+        Transform {
+            translation 0 0 0.1362
+            children [
+                Shape {
+                    geometry Box {
+                        size 0.0638 0.0638 0.02
+                    }
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 0.75 1 0.75
+                            shininess 0.8
+                            specularColor 1 1 1
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+    boundingObject Transform
+    {
+        translation 0 0 0.0762
+        children [
+            Box {
+                size 0.0635 0.0635 0.1524
+            }
+        ]
+    }
+    }
+}

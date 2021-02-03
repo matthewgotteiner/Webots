@@ -1,0 +1,191 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  basicTimeStep 16
+  contactProperties [
+    ContactProperties {
+      coulombFriction [
+        3
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.30273133721988793 0.46076595338470333 0.8342951957589975 2.030309012209308
+  position 17.072037418258752 6.495651902148579 12.506771207880027
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  rotation 1 0 0 1.5707963267948966
+  floorSize 4.572 9.144
+  floorTileSize 0.762 0.762
+  wallHeight 0.5
+}
+NavMarker {
+  name "A1"
+  translation -1.524 -3.81 0
+}
+NavMarker {
+  name "A3"
+  translation -1.524 -2.286 0
+}
+NavMarker {
+  name "A4"
+  translation -1.524 -1.524 0
+}
+NavMarker {
+  name "A6"
+  translation -1.524 0 0
+}
+NavMarker {
+  name "A7"
+  translation -1.524 0.762 0
+}
+NavMarker {
+  name "A8"
+  translation -1.524 1.524 0
+}
+NavMarker {
+  name "A9"
+  translation -1.524 2.286 0
+}
+NavMarker {
+  name "A10"
+  translation -1.524 3.048 0
+}
+NavMarker {
+  name "A11"
+  translation -1.524 3.81 0
+}
+NavMarker {
+  name "B1"
+  translation -0.762 -3.81 0
+}
+NavMarker {
+  name "B2"
+  translation -0.762 -3.048 0
+}
+NavMarker {
+  name "B3"
+  translation -0.762 -2.286 0
+}
+NavMarker {
+  name "B4"
+  translation -0.762 -1.524 0
+}
+NavMarker {
+  name "B5"
+  translation -0.762 -0.762 0
+}
+NavMarker {
+  name "B6"
+  translation -0.762 0 0
+}
+NavMarker {
+  name "B7"
+  translation -0.762 0.762 0
+}
+NavMarker {
+  name "B8"
+  translation -0.762 1.524 0
+}
+NavMarker {
+  name "B9"
+  translation -0.762 2.286 0
+}
+NavMarker {
+  name "B11"
+  translation -0.762 3.81 0
+}
+NavMarker {
+  name "C3"
+  translation 0 -2.286 0
+}
+NavMarker {
+  name "C9"
+  translation 0 2.286 0
+}
+NavMarker {
+  name "D1"
+  translation 0.762 -3.81 0
+}
+NavMarker {
+  name "D2"
+  translation 0.762 -3.048 0
+}
+NavMarker {
+  name "D3"
+  translation 0.762 -2.286 0
+}
+NavMarker {
+  name "D4"
+  translation 0.762 -1.524 0
+}
+NavMarker {
+  name "D5"
+  translation 0.762 -0.762 0
+}
+NavMarker {
+  name "D6"
+  translation 0.762 0 0
+}
+NavMarker {
+  name "D7"
+  translation 0.762 0.762 0
+}
+NavMarker {
+  name "D8"
+  translation 0.762 1.524 0
+}
+NavMarker {
+  name "D9"
+  translation 0.762 2.286 0
+}
+NavMarker {
+  name "D10"
+  translation 0.762 3.048 0
+}
+NavMarker {
+  name "D11"
+  translation 0.762 3.81 0
+}
+NavMarker {
+  name "E1"
+  translation 1.524 -3.81 0
+}
+NavMarker {
+  name "E3"
+  translation 1.524 -2.286 0
+}
+NavMarker {
+  name "E4"
+  translation 1.524 -1.524 0
+}
+NavMarker {
+  name "E6"
+  translation 1.524 0 0
+}
+NavMarker {
+  name "E7"
+  translation 1.524 0.762 0
+}
+NavMarker {
+  name "E8"
+  translation 1.524 1.524 0
+}
+NavMarker {
+  name "E9"
+  translation 1.524 2.286 0
+}
+NavMarker {
+  name "E10"
+  translation 1.524 3.048 0
+}
+DEF Supervisor Robot {
+  rotation 1 0 0 1.5707963267948966
+  controller "http_supervisor"
+  supervisor TRUE
+  synchronization FALSE
+}
