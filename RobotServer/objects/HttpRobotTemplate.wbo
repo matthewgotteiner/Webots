@@ -1,8 +1,21 @@
 #VRML_OBJ R2021a utf8
 DEF RobotTemplate Robot {
-  translation 2.8443388164002488e-12 -1.8367728249428692e-08 -0.013902311876438977
-  rotation 0.999999980902263 0.00015048523489597006 0.00012469830581189045 -5.299786968462981e-06
+  translation -4.040465635521352e-07 5.542122743965039e-05 -0.0004979818870471751
+  rotation 0.9999560222553209 0.00937823892755729 -4.679672949339127e-05 -0.014762789747290086
   children [
+    Transform {
+      translation 0 0 0.2
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+          }
+          geometry Box {
+            size 0.9 1.1 0.2
+          }
+        }
+      ]
+    }
     InertialUnit {
       name "IMU1"
     }
@@ -21,6 +34,7 @@ DEF RobotTemplate Robot {
     }
     MotorizedRobotWheel {
       translation -0.3683 0.35 0.0762
+      rotation -1 0 0 2.9802322387695313e-08
       name "FL Wheel"
       device [
         PositionSensor {
@@ -34,6 +48,7 @@ DEF RobotTemplate Robot {
     }
     MotorizedRobotWheel {
       translation -0.368275 0 0.071375
+      rotation 1 0 0 2.9802322387695313e-08
       name "CL Wheel"
       device [
         PositionSensor {
@@ -47,6 +62,7 @@ DEF RobotTemplate Robot {
     }
     MotorizedRobotWheel {
       translation 0.3683 0.35 0.0761856
+      rotation -1 0 0 2.9802322387695313e-08
       name "FR Wheel"
       device [
         PositionSensor {
@@ -60,6 +76,7 @@ DEF RobotTemplate Robot {
     }
     MotorizedRobotWheel {
       translation 0.3683 0 0.0711856
+      rotation 1 0 0 2.9802322387695313e-08
       name "CR Wheel"
       device [
         PositionSensor {
@@ -73,6 +90,7 @@ DEF RobotTemplate Robot {
     }
     MotorizedRobotWheel {
       translation -0.3683 -0.35 0.0761856
+      rotation 0.3820545503726815 0.9239747841475688 0.01746192426342322 2.768040321278569e-13
       name "BL wheel"
       device [
         PositionSensor {
@@ -86,6 +104,7 @@ DEF RobotTemplate Robot {
     }
     MotorizedRobotWheel {
       translation 0.3683 -0.35 0.0761856
+      rotation 0.6515714810172186 -0.7585728992063844 -0.004664945299660692 6.115458936643195e-15
       name "BR wheel"
       device [
         PositionSensor {
@@ -160,4 +179,6 @@ DEF RobotTemplate Robot {
   }
   controller ""
   supervisor TRUE
+  linearVelocity -6.928213244258853e-11 -2.7522984001442463e-10 3.957892216239998e-06
+  angularVelocity -8.615410374221726e-08 -4.061387573926581e-08 -1.9156730020366594e-10
 }
