@@ -84,7 +84,7 @@ PROTO PowerPort [
                                 }
                             ]
                         }
-                        # front (below top port)
+                        # front (bottom)
                         Transform {
                             translation 0 0.003175 0.2286
                             children [
@@ -93,27 +93,128 @@ PROTO PowerPort [
                                 }
                             ]
                         }
+                        # front (sides of bottom port)
                         Transform {
-                            translation 0.5207 0.003175 1.057275
+                            translation 0.5207 0.003175 0.5842
                             children [
                                 Box {
-                                    size 0.1778 0.00635 2.11455
+                                    size 0.1778 0.00635 0.254
                                 }
                             ]
                         }
                         Transform {
-                            translation -0.5207 0.003175 1.057275
+                            translation -0.5207 0.003175 0.5842
                             children [
                                 Box {
-                                    size 0.1778 0.00635 2.11455
+                                    size 0.1778 0.00635 0.254
                                 }
                             ]
                         }
+                        # front (between ports)
                         Transform {
                             translation 0 0.003175 1.412875
                             children [
                                 Box {
                                     size 1.2192 0.00635 1.40335
+                                }
+                            ]
+                        }
+                        # front (above top port)
+                        Transform {
+                            translation 0 0.003175 2.962275
+                            children [
+                                Box {
+                                    size 1.2192 0.00635 0.17145
+                                }
+                            ]
+                        }
+                        # front (top port sides)
+                        Transform {
+                            translation 0.525272 0.003175 2.49555
+                            children [
+                                Box {
+                                    size 0.169672 0.00635 0.762
+                                }
+                            ]
+                        }
+                        Transform {
+                            translation -0.525272 0.003175 2.49555
+                            children [
+                                Box {
+                                    size 0.169672 0.00635 0.762
+                                }
+                            ]
+                        }
+                        # front (hexagon sides)
+                        Transform {
+                            rotation 0 1 0 0.52359878
+                            translation 0.41529 0.003175 2.27965
+                            children [
+                                Box {
+                                    size 0.169672 0.00635 0.439928
+                                }
+                            ]
+                        }
+                        Transform {
+                            rotation 0 1 0 -0.52359878
+                            translation -0.41529 0.003175 2.27965
+                            children [
+                                Box {
+                                    size 0.169672 0.00635 0.439928
+                                }
+                            ]
+                        }
+                        Transform {
+                            rotation 0 1 0 -0.52359878
+                            translation 0.41529 0.003175 2.71145
+                            children [
+                                Box {
+                                    size 0.169672 0.00635 0.439928
+                                }
+                            ]
+                        }
+                        Transform {
+                            rotation 0 1 0 0.52359878
+                            translation -0.41529 0.003175 2.71145
+                            children [
+                                Box {
+                                    size 0.169672 0.00635 0.439928
+                                }
+                            ]
+                        }
+                        # ball guide
+                        Transform {
+                            translation 0.5207 -0.3048 0.5842
+                            children [
+                                Box {
+                                    size 0.1778 0.6096 0.254
+                                }
+                            ]
+                        }
+                        Transform {
+                            translation -0.5207 -0.3048 0.5842
+                            children [
+                                Box {
+                                    size 0.1778 0.6096 0.254
+                                }
+                            ]
+                        }
+                        # ball guide (ramp)
+                        Transform {
+                            translation 0.5207 -0.3048 0.86465288
+                            rotation 0 1 0 -1.04719755
+                            children [
+                                Box {
+                                    size 0.3556 0.6096 0.00635
+                                }
+                            ]
+                        }
+                        Transform {
+                            translation -0.5207 -0.3048 0.86465288
+                            rotation 0 1 0 1.04719755
+                            children [
+                                Box {
+                                    size 0.3556 0.6096 0.00635
                                 }
                             ]
                         }

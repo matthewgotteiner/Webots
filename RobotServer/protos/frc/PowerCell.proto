@@ -9,6 +9,7 @@ PROTO PowerCell [
       density -1
       mass 0.14174762
   }
+  field SFString   contactMaterial "power-cell"
 ]
 {
     Solid {
@@ -16,20 +17,25 @@ PROTO PowerCell [
     translation IS translation
     rotation IS rotation
     physics IS physics
+    contactMaterial IS contactMaterial
     children [
         Shape {
             geometry Sphere {
                 radius      0.0889
-                subdivision 2
+                subdivision 5
             }
-            appearance Appearance {
-                texture ImageTexture {
+            appearance PBRAppearance {
+                baseColorMap ImageTexture {
                     url "textures/power-cell.png"
+                    repeatS FALSE
+                    repeatT FALSE
                 }
-                material Material {
-                    diffuseColor 1 1 0
-                    shininess 0
+                textureTransform TextureTransform {
+                    scale 4 4
+                    translation 0 -0.375
                 }
+                roughness 0.5
+                metalness 0
             }
         }
     ]
