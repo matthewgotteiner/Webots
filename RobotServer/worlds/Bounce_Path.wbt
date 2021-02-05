@@ -10,8 +10,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.3233706541611588 0.4020300257195603 0.8566231834636009 1.808788794234062
-  position 9.02159704848439 1.3169980542956876 9.346986825539387
+  orientation 0.31052399002246195 0.36193787111361925 0.8789629281569677 1.7076254763926846
+  position 8.503235156808326 0.5112305291582103 10.571146330910018
 }
 TexturedBackground {
 }
@@ -24,36 +24,16 @@ RectangleArena {
   wallHeight 0.5
 }
 NavMarker {
-  translation -1.524 -3.81 0
-  name "A1"
-}
-NavMarker {
   translation -1.524 -2.286 0
   name "A3"
-}
-NavMarker {
-  translation -1.524 -1.524 0
-  name "A4"
 }
 NavMarker {
   translation -1.524 0 0
   name "A6"
 }
 NavMarker {
-  translation -1.524 0.762 0
-  name "A7"
-}
-NavMarker {
-  translation -1.524 1.524 0
-  name "A8"
-}
-NavMarker {
   translation -1.524 2.286 0
   name "A9"
-}
-NavMarker {
-  translation -1.524 3.048 0
-  name "A10"
 }
 NavMarker {
   translation -0.762 -3.81 0
@@ -64,20 +44,12 @@ NavMarker {
   name "B2"
 }
 NavMarker {
-  translation -0.762 -2.286 0
-  name "B3"
-}
-NavMarker {
   translation -0.762 -1.524 0
   name "B4"
 }
 NavMarker {
   translation -0.762 -0.762 0
   name "B5"
-}
-NavMarker {
-  translation -0.762 0 0
-  name "B6"
 }
 NavMarker {
   translation -0.762 0.762 0
@@ -88,24 +60,12 @@ NavMarker {
   name "B8"
 }
 NavMarker {
-  translation -0.762 2.286 0
-  name "B9"
-}
-NavMarker {
   translation -0.762 3.05 0
   name "B10"
 }
 NavMarker {
   translation -0.762 3.81 0
   name "B11"
-}
-NavMarker {
-  translation 0 -2.286 0
-  name "C3"
-}
-NavMarker {
-  translation 0 2.286 0
-  name "C9"
 }
 NavMarker {
   translation 0.762 -3.81 0
@@ -120,16 +80,8 @@ NavMarker {
   name "D3"
 }
 NavMarker {
-  translation 0.762 -1.524 0
-  name "D4"
-}
-NavMarker {
   translation 0.762 -0.762 0
   name "D5"
-}
-NavMarker {
-  translation 0.762 0 0
-  name "D6"
 }
 NavMarker {
   translation 0.762 0.762 0
@@ -140,10 +92,6 @@ NavMarker {
   name "D8"
 }
 NavMarker {
-  translation 0.762 2.286 0
-  name "D9"
-}
-NavMarker {
   translation 0.762 3.048 0
   name "D10"
 }
@@ -152,36 +100,8 @@ NavMarker {
   name "D11"
 }
 NavMarker {
-  translation 1.524 -3.81 0
-  name "E1"
-}
-NavMarker {
   translation 1.524 -2.286 0
   name "E3"
-}
-NavMarker {
-  translation 1.524 -1.524 0
-  name "E4"
-}
-NavMarker {
-  translation 1.524 0 0
-  name "E6"
-}
-NavMarker {
-  translation 1.524 0.762 0
-  name "E7"
-}
-NavMarker {
-  translation 1.524 1.524 0
-  name "E8"
-}
-NavMarker {
-  translation 1.524 2.286 0
-  name "E9"
-}
-NavMarker {
-  translation 1.524 3.048 0
-  name "E10"
 }
 DEF Supervisor Robot {
   rotation 1 0 0 1.5707963267948966

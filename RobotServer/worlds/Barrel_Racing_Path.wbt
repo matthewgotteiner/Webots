@@ -1,0 +1,59 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  basicTimeStep 16
+  contactProperties [
+    ContactProperties {
+      coulombFriction [
+        3
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.3193487152652753 0.39420060749760055 0.8617553475940494 1.793769408713356
+  position 8.82527907579538 1.2230781674720683 9.509487859441142
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  rotation 1 0 0 1.5707963267948966
+  floorSize 4.572 9.144
+  floorTileSize 0.762 0.762
+  wallHeight 0.5
+}
+NavMarker {
+  translation -0.762 -3.81 0
+  name "B1"
+}
+NavMarker {
+  translation -0.762 -3.048 0
+  name "B2"
+}
+NavMarker {
+  translation -0.762 1.524 0
+  name "B8"
+}
+NavMarker {
+  translation 0.762 -3.81 0
+  name "D1"
+}
+NavMarker {
+  translation 0.762 -3.048 0
+  name "D2"
+}
+NavMarker {
+  translation 0.762 -0.762 0
+  name "D5"
+}
+NavMarker {
+  translation 0.762 3.048 0
+  name "D10"
+}
+DEF Supervisor Robot {
+  rotation 1 0 0 1.5707963267948966
+  controller "http_supervisor"
+  supervisor TRUE
+  synchronization FALSE
+}
