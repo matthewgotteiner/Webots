@@ -7,6 +7,7 @@ import logging
 import sys
 import threading
 import time
+import math
 
 app = Flask(__name__)
 
@@ -68,12 +69,21 @@ def put_motors():
         for imu in device_map["IMUs"].values()
     ]
 
+    # return exact robot world pose for debugging
+    robot_node = robot.getSelf()
+    position = robot_node.getPosition()
+    rotation = robot_node.getOrientation()
+    yaw = math.degrees(math.atan2(rotation[0], rotation[1])) % 360
     return json.dumps({
         "Sensors": list(itertools.chain(
             distance_sensor_values,
             position_sensor_values,
             imu_sensor_values
-        ))
+        )),
+        "WorldPose": {
+            "Position": position,
+            "Yaw": yaw
+        }
     })
 
 @app.route("/position", methods=['PUT'])
