@@ -27,12 +27,9 @@ PROTO PowerCell [
             appearance PBRAppearance {
                 baseColorMap ImageTexture {
                     url "textures/power-cell.png"
-                    repeatS FALSE
-                    repeatT FALSE
                 }
-                textureTransform TextureTransform {
-                    scale 4 4
-                    translation 0 -0.375
+                normalMap ImageTexture {
+                    url "textures/power-cell-normal.png"
                 }
                 roughness 0.5
                 metalness 0
