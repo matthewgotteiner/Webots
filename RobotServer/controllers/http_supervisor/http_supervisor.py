@@ -13,7 +13,7 @@ log.setLevel(logging.ERROR)
 
 SUPERVISOR_PORT = 10001
 tcp_ports_available = [str(port) for port in range(SUPERVISOR_PORT + 6, SUPERVISOR_PORT, -1)]
-tcp_ports_in_use = []
+ports_to_robots = {}
 next_robot_id = 0
 app = Flask(__name__)
 supervisor = Supervisor()
@@ -42,8 +42,8 @@ def post_robot():
     port = spawn_robot(template)
     return str(port)
 
-def spawn_robot(robot_template):
-    global supervisor, tcp_ports_available, tcp_ports_in_use, next_robot_id
+def spawn_robot(robot_template, singleton=True):
+    global supervisor, tcp_ports_available, ports_to_robots, next_robot_id
 
     # Check if there are enough available ports
     if len(tcp_ports_available) == 0:
@@ -54,14 +54,21 @@ def spawn_robot(robot_template):
     if not path.exists(template_file):
         return "Error: robot template '{}' not found.".format(robot_template)
 
+    # If in singleton mode, clear out any existing robots
+    if singleton:
+        for robot in ports_to_robots.values():
+            robot.remove()
+        tcp_ports_available.extend(ports_to_robots.keys())
+        ports_to_robots = {}
+
     # Claim the next port
     tcp_port = tcp_ports_available.pop()
-    tcp_ports_in_use.append(tcp_port)
-
+    
     # Spawn the robot at the end of the root children list
     root_children_field = Node.getField(supervisor.getRoot(), "children")
     root_children_field.importMFNode(-1, template_file)
     new_robot = root_children_field.getMFNode(-1)
+    ports_to_robots[tcp_port] = new_robot
     next_robot_id += 1
 
     # Pass the robot ID and port as a controller arg
