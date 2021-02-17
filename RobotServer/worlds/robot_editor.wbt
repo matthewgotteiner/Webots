@@ -3,8 +3,8 @@ WorldInfo {
 }
 Viewpoint {
   fieldOfView 1.0472
-  orientation -0.2198251212143755 0.5568234088320899 0.8010147361064567 3.7650499984637564
-  position -1.4212281307155168 1.6950343504027987 1.1771685052471712
+  orientation -0.2433748212815203 0.5958256706328148 0.7653498981388477 3.789468375875331
+  position -1.327197293284698 1.5322887819942994 0.9912258028879687
 }
 Solid {
   rotation 1 0 0 1.57079632679
@@ -37,8 +37,8 @@ DirectionalLight {
   castShadows TRUE
 }
 DEF RobotTemplate Robot {
-  translation 1.9160207020320672e-05 -0.0013414873550237905 -0.0004974371857656193
-  rotation 0.9999560318927191 0.009377135600333264 6.007745138498217e-05 -0.014762583634911487
+  translation 1.9720902316457254e-05 0.048724436282159556 -0.0003148580450256632
+  rotation 0.9999999923505334 1.0500440384111834e-06 0.0001236843987860144 -0.012177729520541488
   children [
     Transform {
       translation 0 0 0.2
@@ -74,12 +74,12 @@ DEF RobotTemplate Robot {
       rotation -0.5773509358554485 0.5773489358556708 0.5773509358554485 -2.0944
       children [
         TrackRobotWheel {
-          name "FL wheel"
           position -0.35 0.004
+          name "FL wheel"
         }
         TrackRobotWheel {
-          name "BL wheel"
           position 0.35 0.004
+          name "BL wheel"
         }
         TrackRobotWheel {
           name "CL wheel"
@@ -122,6 +122,9 @@ DEF RobotTemplate Robot {
       physics Physics {
       }
       device [
+        PositionSensor {
+          name "CAN1 #"
+        }
         LinearMotor {
           name "Motor1 # L track motor"
           maxVelocity 3.6576
@@ -142,12 +145,12 @@ DEF RobotTemplate Robot {
       rotation -0.5773509358554485 0.5773489358556708 0.5773509358554485 -2.0944
       children [
         TrackRobotWheel {
-          name "FR wheel"
           position -0.35 0.004
+          name "FR wheel"
         }
         TrackRobotWheel {
-          name "BR wheel"
           position 0.35 0.004
+          name "BR wheel"
         }
         TrackRobotWheel {
           name "CR wheel"
@@ -190,6 +193,9 @@ DEF RobotTemplate Robot {
       physics Physics {
       }
       device [
+        PositionSensor {
+          name "CAN2 #"
+        }
         LinearMotor {
           name "Motor2 # R track motor"
           maxVelocity 3.6576
@@ -264,11 +270,10 @@ DEF RobotTemplate Robot {
     density -1
     mass 25
     centerOfMass [
-      0 0.2 0
+      0 0 0.2
     ]
   }
   controller ""
   supervisor TRUE
-  linearVelocity -1.9307616014503074e-10 -2.9423154700048503e-09 -3.5344446601866625e-08
-  angularVelocity 9.643542992795928e-07 -9.62735324333991e-08 3.54159817750747e-10
+  synchronization FALSE
 }

@@ -1,7 +1,7 @@
-#VRML_OBJ R2020b utf8
+#VRML_OBJ R2021a utf8
 DEF RobotTemplate Robot {
-  translation 1.964503570164128e-05 -0.0013464984951587211 -0.0003150171451552974
-  rotation 0.9999999923444964 5.025841722712527e-06 0.00012363554535685367 -0.012178001113895815
+  translation 1.9720902316457254e-05 0.048724436282159556 -0.0003148580450256632
+  rotation 0.9999999923505334 1.0500440384111834e-06 0.0001236843987860144 -0.012177729520541488
   children [
     Transform {
       translation 0 0 0.2
@@ -85,6 +85,9 @@ DEF RobotTemplate Robot {
       physics Physics {
       }
       device [
+        PositionSensor {
+          name "CAN1 #"
+        }
         LinearMotor {
           name "Motor1 # L track motor"
           maxVelocity 3.6576
@@ -153,6 +156,9 @@ DEF RobotTemplate Robot {
       physics Physics {
       }
       device [
+        PositionSensor {
+          name "CAN2 #"
+        }
         LinearMotor {
           name "Motor2 # R track motor"
           maxVelocity 3.6576
@@ -227,11 +233,10 @@ DEF RobotTemplate Robot {
     density -1
     mass 25
     centerOfMass [
-      0 0.2 0
+      0 0 0.2
     ]
   }
   controller ""
   supervisor TRUE
-  linearVelocity 4.02574375306801e-09 -6.742258020029161e-09 1.6914167740989213e-06
-  angularVelocity 2.6313418646376197e-06 3.8782027915575617e-07 -3.905158402463294e-09
+  synchronization FALSE
 }
