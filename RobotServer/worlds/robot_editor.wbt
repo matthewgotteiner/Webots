@@ -69,85 +69,141 @@ DEF RobotTemplate Robot {
         }
       ]
     }
-    MotorizedRobotWheel {
-      translation -0.3683 0.34999999999992143 0.07619999999999884
-      name "FL Wheel"
-      device [
-        PositionSensor {
-          name "CAN1 #"
+    Track {
+      translation -0.3683 0 0.0712
+      rotation -0.5773509358554485 0.5773489358556708 0.5773509358554485 -2.0944
+      children [
+        TrackRobotWheel {
+          name "FL wheel"
+          position -0.35 0.004
         }
-        RotationalMotor {
-          name "Motor1 # front left"
-          maxVelocity 300
+        TrackRobotWheel {
+          name "BL wheel"
+          position 0.35 0.004
+        }
+        TrackRobotWheel {
+          name "CL wheel"
         }
       ]
+      name "L track"
+      boundingObject Group {
+        children [
+          Transform {
+            translation -0.35 0.004 0
+            rotation 1 0 0 1.5708
+            children [
+              Cylinder {
+                height 0.0254
+                radius 0.0762
+              }
+            ]
+          }
+          Transform {
+            translation 0.35 0.004 0
+            rotation 1 0 0 1.5708
+            children [
+              Cylinder {
+                height 0.0254
+                radius 0.0762
+              }
+            ]
+          }
+          Transform {
+            rotation 1 0 0 1.5708
+            children [
+              Cylinder {
+                height 0.0254
+                radius 0.0762
+              }
+            ]
+          }
+        ]
+      }
+      physics Physics {
+      }
+      device [
+        LinearMotor {
+          name "Motor1 # L track motor"
+          maxVelocity 3.6576
+        }
+      ]
+      animatedGeometry Shape {
+        appearance PBRAppearance {
+          baseColor 0 0 0
+        }
+        geometry Box {
+          size 0.08 0.01 0.01
+        }
+      }
+      geometriesCount 16
     }
-    MotorizedRobotWheel {
-      translation -0.368275 6.652444111222356e-14 0.07137500000000098
-      name "CL Wheel"
-      device [
-        PositionSensor {
-          name "CAN5 #"
+    Track {
+      translation 0.3683 0 0.0712
+      rotation -0.5773509358554485 0.5773489358556708 0.5773509358554485 -2.0944
+      children [
+        TrackRobotWheel {
+          name "FR wheel"
+          position -0.35 0.004
         }
-        RotationalMotor {
-          name "Motor5 # center left"
-          maxVelocity 300
+        TrackRobotWheel {
+          name "BR wheel"
+          position 0.35 0.004
         }
-      ]
-    }
-    MotorizedRobotWheel {
-      translation 0.3683 0.3499999999999246 0.0761855999999989
-      name "FR Wheel"
-      device [
-        PositionSensor {
-          name "CAN2 #"
-        }
-        RotationalMotor {
-          name "Motor2 # front right"
-          maxVelocity 300
+        TrackRobotWheel {
+          name "CR wheel"
         }
       ]
-    }
-    MotorizedRobotWheel {
-      translation 0.3683 6.9500997898104e-14 0.07118560000000103
-      name "CR Wheel"
+      name "R track"
+      boundingObject Group {
+        children [
+          Transform {
+            translation -0.35 0.004 0
+            rotation 1 0 0 1.5708
+            children [
+              Cylinder {
+                height 0.0254
+                radius 0.0762
+              }
+            ]
+          }
+          Transform {
+            translation 0.35 0.004 0
+            rotation 1 0 0 1.5708
+            children [
+              Cylinder {
+                height 0.0254
+                radius 0.0762
+              }
+            ]
+          }
+          Transform {
+            rotation 1 0 0 1.5708
+            children [
+              Cylinder {
+                height 0.0254
+                radius 0.0762
+              }
+            ]
+          }
+        ]
+      }
+      physics Physics {
+      }
       device [
-        PositionSensor {
-          name "CAN6 #"
-        }
-        RotationalMotor {
-          name "Motor6 # center right"
-          maxVelocity 300
+        LinearMotor {
+          name "Motor2 # R track motor"
+          maxVelocity 3.6576
         }
       ]
-    }
-    MotorizedRobotWheel {
-      translation -0.3683 -0.35 0.0761856
-      rotation -0.1315804659258022 0.9913017643707138 0.002718996553623482 6.493296137937094e-13
-      name "BL wheel"
-      device [
-        PositionSensor {
-          name "CAN3 #"
+      animatedGeometry Shape {
+        appearance PBRAppearance {
+          baseColor 0 0 0
         }
-        RotationalMotor {
-          name "Motor3 # back left"
-          maxVelocity 300
+        geometry Box {
+          size 0.08 0.01 0.01
         }
-      ]
-    }
-    MotorizedRobotWheel {
-      translation 0.3683 -0.35 0.0761856
-      rotation 0.422832421162626 -0.9061782073509025 0.007334857603009907 -4.229903674387679e-13
-      name "BR wheel"
-      device [
-        PositionSensor {
-          name "CAN4 #"
-        }
-        RotationalMotor {
-          name "Motor4 # back right"
-          maxVelocity 300
-        }
-      ]
+      }
+      geometriesCount 16
     }
     DistanceSensor {
       translation 0.3683 0 0.1

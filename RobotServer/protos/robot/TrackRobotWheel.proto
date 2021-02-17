@@ -1,0 +1,57 @@
+#VRML_SIM R2021a utf8
+
+PROTO TrackRobotWheel [
+  field SFVec2f    position       0 0
+  field SFRotation rotation       1 0 0 1.5708
+  field SFString   name           "wheel"
+  field SFFloat    sprocketRadius 0.0381
+  field SFFloat    height         0.0254
+  field SFFloat    radius         0.0762
+]
+{
+  TrackWheel {
+    position IS position
+    radius IS sprocketRadius
+    children [
+      Solid {
+        name IS name
+        rotation IS rotation
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.1 0.1 0.1
+              metalness 0
+              normalMap ImageTexture {
+                url "textures/wheel-normal.png"
+              }
+            }
+            geometry Cylinder {
+              height IS height
+              radius IS radius
+              side   FALSE
+            }
+          }
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.1 0.1 0.8
+              metalness 0
+              roughness 0.8
+              normalMap ImageTexture {
+                url "textures/wheel-tire-normal.png"
+              }
+              textureTransform TextureTransform {
+                scale 4 1
+              }
+            }
+            geometry Cylinder {
+              height IS height
+              radius IS radius
+              top    FALSE
+              bottom FALSE
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

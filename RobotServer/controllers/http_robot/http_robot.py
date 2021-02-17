@@ -112,8 +112,8 @@ def build_device_map(robot):
         device = robot.getDeviceByIndex(i)
         device_type = device.getNodeType()
         device_id = get_device_id(device)
-        
-        if device_type == Node.ROTATIONAL_MOTOR:
+
+        if device_type == Node.ROTATIONAL_MOTOR or device_type == Node.LINEAR_MOTOR:
             # Initialize the motor with an infinite target position so that we can directly control velocity
             device.setPosition(float("inf"))
             device.setVelocity(0)
