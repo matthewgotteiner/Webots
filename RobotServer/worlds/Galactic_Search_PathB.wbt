@@ -10,8 +10,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.3233706541611588 0.4020300257195603 0.8566231834636009 1.808788794234062
-  position 9.02159704848439 1.3169980542956876 9.346986825539387
+  orientation 0.30504777005803785 0.39938931596857874 0.8645426723261086 1.847602897217322
+  position 12.665847552524347 3.2642628285809723 8.629610144898695
 }
 TexturedBackground {
 }
@@ -22,6 +22,40 @@ RectangleArena {
   floorSize 4.572 9.144
   floorTileSize 0.762 0.762
   wallHeight 0.5
+}
+DEF End_Pin Solid {
+  translation 0 4.38 0.159989
+  rotation 1 0 0 1.5708
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0.0313725
+        metalness 0.5
+      }
+      geometry Capsule {
+        height 0.1
+        radius 0.05
+      }
+    }
+  ]
+  name "solid(2)"
+}
+DEF Start_Pin Solid {
+  translation 0 -4.38 0.159989
+  rotation 1 0 0 1.5708
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 1 0.0823529
+        metalness 0.5
+      }
+      geometry Capsule {
+        height 0.1
+        radius 0.05
+      }
+    }
+  ]
+  name "solid(3)"
 }
 NavMarker {
   translation -0.762 -3.81 0
@@ -68,4 +102,35 @@ DEF Supervisor Robot {
   controller "http_supervisor"
   supervisor TRUE
   synchronization FALSE
+}
+DEF End_Zone Solid {
+  translation 0 4.38 0.0100116
+  rotation 1 0 0 1.5708
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Plane {
+        size 4.56 0.38
+      }
+    }
+  ]
+  name "solid(1)"
+}
+DEF Start_Zone Solid {
+  translation 0 -4.38 0.01
+  rotation 1 0 0 1.5708
+  children [
+    DEF Zone Shape {
+      appearance PBRAppearance {
+        baseColor 0.305882 1 0.294118
+        metalness 0
+      }
+      geometry Plane {
+        size 4.56 0.38
+      }
+    }
+  ]
 }

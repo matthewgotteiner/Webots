@@ -10,8 +10,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.3193487152652753 0.39420060749760055 0.8617553475940494 1.793769408713356
-  position 8.82527907579538 1.2230781674720683 9.509487859441142
+  orientation 0.31755655678587563 0.3794918699798377 0.8689900769637735 1.749667396378725
+  position 8.303847855694226 0.5602266573396284 9.454330184762634
 }
 TexturedBackground {
 }
@@ -23,32 +23,70 @@ RectangleArena {
   floorTileSize 0.762 0.762
   wallHeight 0.5
 }
+DEF Start_Zone Solid {
+  translation 0 -3.43 0.00998895
+  rotation 1 0 0 1.5708
+  children [
+    DEF Zone Shape {
+      appearance PBRAppearance {
+        baseColor 0.305882 1 0.294118
+        metalness 0
+      }
+      geometry Plane {
+        size 1.52 0.76
+      }
+    }
+  ]
+}
+DEF End_Zone Solid {
+  translation 0 -4.19 0.0099861
+  rotation 1 0 0 1.5708
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Plane {
+        size 1.52 0.76
+      }
+    }
+  ]
+  name "solid(1)"
+}
 NavMarker {
-  translation -0.762 -3.81 0
+  translation -0.762 -3.7934980122002204 -0.0009809998798639263
+  rotation 0.12399531699041554 -0.05035639455201219 -0.9910042355571284 -5.941938786119123e-16
   name "B1"
 }
 NavMarker {
-  translation -0.762 -3.048 0
+  translation -0.762 -3.048 -0.00098099987986398
+  rotation 0.21029656814556139 0.11449479821256682 -0.9709100342505801 -2.6774269034743727e-16
   name "B2"
 }
 NavMarker {
-  translation -0.762 1.524 0
+  translation -0.762 1.524 -0.0009809998798642593
+  rotation 0.6628314267749803 0.11241000804955972 0.7402827093548394 -1.613988061491574e-16
   name "B8"
 }
 NavMarker {
-  translation 0.762 -3.81 0
+  translation 0.762 -3.7934980122002204 -0.0009809998798639263
+  rotation 0.12894646942311117 -0.06462472755545275 -0.9895435577132006 -6.614433947356161e-16
   name "D1"
 }
 NavMarker {
-  translation 0.762 -3.048 0
+  translation 0.762 -3.048 -0.00098099987986398
+  rotation 0.21029656814556139 0.11449479821256682 -0.9709100342505801 -2.6774269034743727e-16
   name "D2"
 }
 NavMarker {
-  translation 0.762 -0.762 0
+  translation 0.762 -0.762 -0.0009809998798641188
+  rotation 0.08278583380728069 0.08882230085572963 -0.9926011810347233 -7.254750894660544e-16
   name "D5"
 }
 NavMarker {
-  translation 0.762 3.048 0
+  translation 0.762 3.048 -0.0009809998798643409
+  rotation 0.23931512705821353 0.10968609990168604 0.9647265049999759 -2.5096223931238927e-16
   name "D10"
 }
 DEF Supervisor Robot {
@@ -56,4 +94,38 @@ DEF Supervisor Robot {
   controller "http_supervisor"
   supervisor TRUE
   synchronization FALSE
+}
+DEF Start_Pin Solid {
+  translation 0 -4.19 0.159989
+  rotation 1 0 0 1.5708
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 1 0.0823529
+        metalness 0.5
+      }
+      geometry Capsule {
+        height 0.1
+        radius 0.05
+      }
+    }
+  ]
+  name "solid(3)"
+}
+DEF End_Pin Solid {
+  translation 0 -3.43 0.159989
+  rotation 1 0 0 1.5708
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0.0313725
+        metalness 0.5
+      }
+      geometry Capsule {
+        height 0.1
+        radius 0.05
+      }
+    }
+  ]
+  name "solid(2)"
 }

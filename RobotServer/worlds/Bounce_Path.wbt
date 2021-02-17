@@ -10,8 +10,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.31052399002246195 0.36193787111361925 0.8789629281569677 1.7076254763926846
-  position 8.503235156808326 0.5112305291582103 10.571146330910018
+  orientation -0.17641042941286073 -0.37836274337301706 -0.9086919141390082 4.075036705716075
+  position 8.66413127758936 6.502953749132298 9.387756603959419
 }
 TexturedBackground {
 }
@@ -108,4 +108,69 @@ DEF Supervisor Robot {
   controller "http_supervisor"
   supervisor TRUE
   synchronization FALSE
+}
+DEF Start_Zone Solid {
+  translation 0 -3.81 0.01
+  rotation 1 0 0 1.5708
+  children [
+    DEF Zone Shape {
+      appearance PBRAppearance {
+        baseColor 0.305882 1 0.294118
+        metalness 0
+      }
+      geometry Plane {
+        size 1.52 1.52
+      }
+    }
+  ]
+}
+DEF End_Zone Solid {
+  translation 0 3.81 0.0100043
+  rotation 1 0 0 1.5708
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Plane {
+        size 1.52 1.52
+      }
+    }
+  ]
+  name "solid(1)"
+}
+DEF Start_Pin Solid {
+  translation 0 -3.81 0.159989
+  rotation 1 0 0 1.5708
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 1 0.0823529
+        metalness 0.5
+      }
+      geometry Capsule {
+        height 0.1
+        radius 0.05
+      }
+    }
+  ]
+  name "solid(3)"
+}
+DEF End_Pin Solid {
+  translation 0 3.81 0.159989
+  rotation 1 0 0 1.5708
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0.0313725
+        metalness 0.5
+      }
+      geometry Capsule {
+        height 0.1
+        radius 0.05
+      }
+    }
+  ]
+  name "solid(2)"
 }
