@@ -4,7 +4,7 @@ WorldInfo {
 Viewpoint {
   fieldOfView 1.0472
   orientation -0.2433748212815203 0.5958256706328148 0.7653498981388477 3.789468375875331
-  position -1.327197293284698 1.5322887819942994 0.9912258028879687
+  position -1.5577611633837274 1.7556751830661999 1.076050773785951
 }
 Solid {
   rotation 1 0 0 1.57079632679
@@ -37,21 +37,11 @@ DirectionalLight {
   castShadows TRUE
 }
 DEF RobotTemplate Robot {
-  translation 1.9720902316457254e-05 0.048724436282159556 -0.0003148580450256632
-  rotation 0.9999999923505334 1.0500440384111834e-06 0.0001236843987860144 -0.012177729520541488
+  translation 1.96504235011255e-05 0.04868109483216637 0.054034321966369925
+  rotation 0.9999647340438219 0.0044141696184734815 0.007144632618119105 -0.000210823584609396
   children [
-    Transform {
+    Bumper {
       translation 0 0 0.2
-      children [
-        Shape {
-          appearance PBRAppearance {
-            baseColor 1 0 0
-          }
-          geometry Box {
-            size 0.9 1.1 0.2
-          }
-        }
-      ]
     }
     InertialUnit {
       name "IMU1"

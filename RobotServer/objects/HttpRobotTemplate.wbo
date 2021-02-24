@@ -1,20 +1,10 @@
 #VRML_OBJ R2021a utf8
 DEF RobotTemplate Robot {
-  translation 1.9720902316457254e-05 0.048724436282159556 -0.0003148580450256632
-  rotation 0.9999999923505334 1.0500440384111834e-06 0.0001236843987860144 -0.012177729520541488
+  translation 1.9652609407321183e-05 0.04868795011223792 -0.0013643673522173438
+  rotation 0.9618819374631805 0.0009831287400604788 0.2734632915766914 -5.508246613108642e-06
   children [
-    Transform {
+    Bumper {
       translation 0 0 0.2
-      children [
-        Shape {
-          appearance PBRAppearance {
-            baseColor 1 0 0
-          }
-          geometry Box {
-            size 0.9 1.1 0.2
-          }
-        }
-      ]
     }
     InertialUnit {
       name "IMU1"

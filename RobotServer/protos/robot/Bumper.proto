@@ -1,0 +1,183 @@
+#VRML_SIM R2021a utf8
+
+PROTO Bumper [
+  field SFVec3f    translation 0 0 0
+  field SFRotation rotation    1 0 0 0
+  field SFString   name        "robot-bumper"
+  field SFVec3f    size        0.711 0.965 0.127
+  field SFFloat    bumperWidth 0.0635          # pool noodle is 2.5in diameter
+  field SFNode     physics     Physics {
+    density -1
+    mass 0.5
+  }
+  field SFString   teamNumber  "488"
+  field SFNode     appearance  PBRAppearance {
+    baseColor 1 0 0
+  }
+]
+{
+  %{
+    frontDecal = {}
+    frontBox = {}
+    rearBox = {}
+    leftBox = {}
+    rightBox = {}
+
+    frontDecal.x = fields.size.value.x + 2 * fields.bumperWidth.value
+    frontDecal.xTranslation = 0
+    frontDecal.yTranslation = (fields.size.value.y / 2) + fields.bumperWidth.value + 0.0001
+
+    frontBox.x1 = fields.size.value.x / 2 + fields.bumperWidth.value
+    frontBox.y1 = fields.size.value.y / 2 + fields.bumperWidth.value
+    frontBox.x2 = - fields.size.value.x / 2 - fields.bumperWidth.value
+    frontBox.y2 = fields.size.value.y / 2
+    frontBox.x = math.abs(frontBox.x1 - frontBox.x2)
+    frontBox.y = math.abs(frontBox.y1 - frontBox.y2)
+    frontBox.xTranslation = 0
+    frontBox.yTranslation = fields.size.value.y / 2 + fields.bumperWidth.value / 2
+
+    rearBox.x1 = fields.size.value.x / 2 + fields.bumperWidth.value
+    rearBox.y1 = fields.size.value.y / 2 + fields.bumperWidth.value
+    rearBox.x2 = - fields.size.value.x / 2 - fields.bumperWidth.value
+    rearBox.y2 = fields.size.value.y / 2
+    rearBox.x = math.abs(rearBox.x1 - rearBox.x2)
+    rearBox.y = math.abs(rearBox.y1 - rearBox.y2)
+    rearBox.xTranslation = 0
+    rearBox.yTranslation = - fields.size.value.y / 2 - fields.bumperWidth.value / 2
+
+    leftBox.x1 = fields.size.value.x / 2 + fields.bumperWidth.value
+    leftBox.y1 = fields.size.value.y / 2 + fields.bumperWidth.value
+    leftBox.x2 = fields.size.value.x / 2
+    leftBox.y2 = - fields.size.value.y / 2 - fields.bumperWidth.value
+    leftBox.x = math.abs(leftBox.x1 - leftBox.x2)
+    leftBox.y = math.abs(leftBox.y1 - leftBox.y2)
+    leftBox.xTranslation = fields.size.value.x / 2 + fields.bumperWidth.value / 2
+    leftBox.yTranslation = 0
+
+    rightBox.x1 = fields.size.value.x / 2 + fields.bumperWidth.value
+    rightBox.y1 = fields.size.value.y / 2 + fields.bumperWidth.value
+    rightBox.x2 = fields.size.value.x / 2
+    rightBox.y2 = - fields.size.value.y / 2 - fields.bumperWidth.value
+    rightBox.x = math.abs(rightBox.x1 - rightBox.x2)
+    rightBox.y = math.abs(rightBox.y1 - rightBox.y2)
+    rightBox.xTranslation = - fields.size.value.x / 2 - fields.bumperWidth.value / 2
+    rightBox.yTranslation = 0
+
+    -- build the texture with team number
+    local gd = require("gd")
+    local debug = require("debug")
+    local os = require('os')
+    local wbrandom = require('wbrandom')
+    wbrandom.seed(os.clock() + os.time())
+    imageWidth = 256
+    imageHeight = 64
+    local im = gd.createTrueColor(imageWidth, imageHeight)
+    bColor = fields.appearance.value.fields.baseColor.value
+    bgColor = im:colorAllocate(bColor.r * 255, bColor.g * 255, bColor.b * 255)
+    im:filledRectangle(0, 0, imageWidth - 1, imageHeight - 1, bgColor)
+    -- add the text in the texture
+    textColor = im:colorAllocate(255, 255, 255)
+    gd.fontCacheSetup()
+    -- calculate dpi so decal size is static
+    hdpi = 200 * (0.838 / frontDecal.x)
+    vdpi = 160 * (0.127 / fields.size.value.z)
+    -- draw once to get dimensions
+    llx, lly, lrx, lry, urx, ury, ulx, uly = im:stringFTEx(bgColor, "Impact", 20, 0, 0, 0, fields.teamNumber.value, { hdpi=hdpi, vdpi=vdpi })
+    -- draw for real, centered
+    textX = (imageWidth - lrx) / 2
+    textY = (imageHeight - ury) / 2
+    im:stringFTEx(textColor, "Impact", 20, 0, textX, textY, fields.teamNumber.value, { hdpi=hdpi, vdpi=vdpi })
+
+    -- save the image in a png file
+    local name = debug.getinfo(1,'S').source  -- get the name of the current file
+    name = name .. wbrandom.integer(0, 100000)  -- add a random number to reduce name clashes
+    local i = 0  -- make sure the file does not already exist
+    local file = io.open(name .. i .. ".png", "r")
+    while file do
+      file:close()
+      i = i + 1
+      file = io.open(name .. i .. ".png", "r")
+    end
+    im:png(name .. i .. ".png")
+    gd.fontCacheShutdown()
+  }%
+
+  Solid {
+    name IS name
+    translation IS translation
+    rotation IS rotation
+    children [
+      Solid {
+        name "front-decal"
+        translation %{=frontDecal.xTranslation}% %{=frontDecal.yTranslation}% 0
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColorMap ImageTexture {
+                url [ %{= '"' .. context.temporary_files_path .. name .. i .. '.png"' }% ]
+              }
+              textureTransform TextureTransform {
+                rotation 3.1415927
+              }
+            }
+            geometry Plane {
+              size %{=frontDecal.x}% %{=fields.size.value.z }%
+            }
+          }
+        ]
+      }
+      Solid {
+        name "front-bumper"
+        translation %{=frontBox.xTranslation}% %{=frontBox.yTranslation}% 0
+        children [
+          Shape {
+            appearance IS appearance
+            geometry Box {
+              size %{=frontBox.x}% %{=frontBox.y}% %{=fields.size.value.z}%
+            }
+          }
+        ]
+      }
+      Solid {
+        name "rear-bumper"
+        translation %{=rearBox.xTranslation}% %{=rearBox.yTranslation}% 0
+        children [
+          Shape {
+            appearance IS appearance
+            geometry Box {
+              size %{=rearBox.x}% %{=rearBox.y}% %{=fields.size.value.z}%
+            }
+          }
+        ]
+      }
+      Solid {
+        name "left-bumper"
+        translation %{=leftBox.xTranslation}% %{=leftBox.yTranslation}% 0
+        children [
+          Shape {
+            appearance IS appearance
+            geometry Box {
+              size %{=leftBox.x}% %{=leftBox.y}% %{=fields.size.value.z}%
+            }
+          }
+        ]
+      }
+      Solid {
+        name "right-bumper"
+        translation %{=rightBox.xTranslation}% %{=rightBox.yTranslation}% 0
+        children [
+          Shape {
+            appearance IS appearance
+            geometry Box {
+              size %{=rightBox.x}% %{=rightBox.y}% %{=fields.size.value.z}%
+            }
+          }
+        ]
+      }
+    ]
+    boundingObject Box {
+      size %{=(fields.size.value.x + fields.bumperWidth.value * 2)}% %{=(fields.size.value.y + fields.bumperWidth.value * 2)}% %{=fields.size.value.z}%
+    }
+    physics IS physics
+  }
+}
