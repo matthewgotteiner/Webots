@@ -1,3 +1,4 @@
+from typing import List
 from collections import defaultdict
 from controller import Node, Supervisor
 from flask import Flask, request
@@ -15,7 +16,7 @@ app = Flask(__name__)
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
-def get_device_id(device):
+def get_device_id(device: str):
     return device.getName().split("#")[0].strip()
 
 @app.route("/ping")
@@ -74,6 +75,7 @@ def put_motors():
     position = robot_node.getPosition()
     rotation = robot_node.getOrientation()
     yaw = math.degrees(math.atan2(rotation[0], rotation[1])) % 360
+
     # simulation time is reported in seconds
     time = robot.getTime()
     return json.dumps({
@@ -107,6 +109,8 @@ def reset_position():
 
     return 'OK'
     
+
+
 def build_device_map(robot):
     device_map = defaultdict(dict)
 
@@ -134,6 +138,48 @@ def build_device_map(robot):
 
     return device_map
 
+
+# Draws a line between point_1 and point_2
+# name creates the node in the tree so we just update the same node each time
+def draw_line(name: str, point_1: List[float], point_2: List[float]):
+    # Create node with name if it doesn't exist yet
+    node_name = f'LINE_{name}'
+    node = robot.getFromDef(node_name)
+
+    if not node:
+        root_node = robot.getRoot();
+        root_children_field = root_node.getField("children");
+
+        template = f"DEF {node_name} " + """Shape {
+            appearance Appearance {
+                material Material {
+                    diffuseColor 0 1 0
+                    emissiveColor 0 1 0
+                }
+            }
+            geometry DEF TRAIL_LINE_SET IndexedLineSet {
+                coord Coordinate {
+                    point [
+                        0 0 0
+                        0 0 0
+                    ]
+                }
+                coordIndex [
+                    0 1 -1
+                ]
+            }
+        }"""
+        root_children_field.importMFNodeFromString(-1, template)
+        node = robot.getFromDef(node_name)
+
+    # Update the coords based on points
+    trail_set_node = robot.getFromDef(f"{node_name}.TRAIL_LINE_SET")
+    coordinates_node = trail_set_node.getField("coord").getSFNode()
+    point_field = coordinates_node.getField("point")
+    point_field.setMFVec3f(0, point_1)
+    point_field.setMFVec3f(1, point_2)
+
+
 def start_flask():
     global app
     # TODO: use argparse to clean this up
@@ -141,6 +187,7 @@ def start_flask():
 
     # Set the host to allow remote connections
     app.run(host='0.0.0.0', port=port)
+
 
 if __name__ == "__main__":
     # Create the robot
