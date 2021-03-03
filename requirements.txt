@@ -1,2 +1,5 @@
 flask
 jupyter
+numpy
+opencv-python
+zmq

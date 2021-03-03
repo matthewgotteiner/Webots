@@ -5,10 +5,16 @@ from flask import Flask, request
 import itertools
 import json
 import logging
+import math
+import socket
 import sys
 import threading
 import time
-import math
+import traceback
+
+# TODO: use argparse to clean this up
+robotId = int(sys.argv[1])
+port = int(sys.argv[2])
 
 app = Flask(__name__)
 
@@ -18,6 +24,18 @@ log.setLevel(logging.ERROR)
 
 def get_device_id(device: str):
     return device.getName().split("#")[0].strip()
+
+def get_public_ip():
+    try:
+        # In case there are multiple network interfaces,
+        # get the public IP address by connecting to Google.
+        probe_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        probe_socket.connect(("8.8.8.8", 80))
+        ip = probe_socket.getsockname()[0]
+        probe_socket.close()
+        return ip
+    except:
+        return '127.0.0.1'
 
 @app.route("/ping")
 def ping():
@@ -135,6 +153,9 @@ def build_device_map(robot):
         elif device_type == Node.INERTIAL_UNIT:
             device.enable(timestep)
             device_map["IMUs"][device_id] = device
+        elif device_type == Node.CAMERA:
+            device.enable(timestep)
+            device_map["Cameras"][device_id] = device
 
     return device_map
 
@@ -181,22 +202,56 @@ def draw_line(name: str, point_1: List[float], point_2: List[float]):
 
 
 def start_flask():
-    global app
-    # TODO: use argparse to clean this up
-    port = int(sys.argv[2])
+    global app, port
+
+    print(f"[HttpRobot{robotId}] Starting flask server on http://{get_public_ip()}:{port}", flush=True)
 
     # Set the host to allow remote connections
     app.run(host='0.0.0.0', port=port)
+
+
+def start_zmq():
+    global device_map, port
+
+    zmq_video_sleep_seconds = 1 / 60
+    zmq_port_offset = 10
+    zmq_port = port + zmq_port_offset
+    print(f"[HttpRobot{robotId}] Starting zmq server on tcp://{get_public_ip()}:{zmq_port}", flush=True)
+
+    try:
+        import cv2
+        import numpy as np
+        import zmq
+
+        camera = next(iter(device_map["Cameras"].values()))
+        image_height = camera.getHeight().to_bytes(4, byteorder='big')
+        image_width = camera.getWidth().to_bytes(4, byteorder='big')
+        image_depth = (4).to_bytes(4, byteorder='big')
+
+        zmq_context = zmq.Context()
+        zmq_socket = zmq_context.socket(zmq.PUB)
+        zmq_socket.bind(f"tcp://0.0.0.0:{zmq_port}")
+
+        while True:
+            image_data = bytes(camera.getImage())
+            zmq_socket.send_multipart([b"image", image_height, image_width, image_depth, image_data])
+            
+            # Sleep so we don't overload the ZMQ socket.
+            # The sleep time is correlated with framerate, but doens't seem to match it exactly.
+            time.sleep(zmq_video_sleep_seconds)
+
+    except:
+        print("Could not start zmq!", file=sys.stderr)
+        print(traceback.format_exc(), file=sys.stderr)
 
 
 if __name__ == "__main__":
     # Create the robot
     robot = Supervisor()
     timestep = int(robot.getBasicTimeStep())
-
-    print("Starting flask server")
     device_map = build_device_map(robot)
     threading.Thread(target=start_flask).start()
+    threading.Thread(target=start_zmq).start()
 
     # Run the simulation loop
     print("Starting null op simulation loop")

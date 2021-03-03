@@ -1,10 +1,26 @@
-#VRML_OBJ R2021a utf8
+#VRML_OBJ R2020b utf8
 DEF RobotTemplate Robot {
-  translation 1.9652609407321183e-05 0.04868795011223792 -0.0013643673522173438
-  rotation 0.9618819374631805 0.0009831287400604788 0.2734632915766914 -5.508246613108642e-06
+  translation 1.9652609407407378e-05 0.048687950113226235 -0.001364367352217316
+  rotation 0.961882135718447 0.0009831511871664445 0.2734625941503922 -5.50826066099543e-06
   children [
     Bumper {
       translation 0 0 0.2
+    }
+    Camera {
+      translation 0 0.4953 0.5
+      rotation 1 0 0 1.5708
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 0 0
+          }
+          geometry Box {
+            size 0.02 0.02 0.02
+          }
+        }
+      ]
+      width 848
+      height 800
     }
     InertialUnit {
       name "IMU1"
@@ -165,7 +181,7 @@ DEF RobotTemplate Robot {
       geometriesCount 16
     }
     DistanceSensor {
-      translation 0.3683 0 0.1
+      translation 0.3683 0 0.4
       children [
         Shape {
           appearance PBRAppearance {
@@ -184,7 +200,7 @@ DEF RobotTemplate Robot {
       ]
     }
     DistanceSensor {
-      translation 0 0.4953 0.1
+      translation 0 0.4953 0.4
       rotation 0 0 -1 -1.5708
       children [
         Shape {
@@ -226,7 +242,6 @@ DEF RobotTemplate Robot {
       0 0 0.2
     ]
   }
-  controller ""
   supervisor TRUE
   synchronization FALSE
 }
