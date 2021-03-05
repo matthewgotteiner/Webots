@@ -22,6 +22,8 @@ app = Flask(__name__)
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
+line_map = {}
+
 def get_device_id(device: str):
     return device.getName().split("#")[0].strip()
 
@@ -111,10 +113,10 @@ def put_motors():
 
 @app.route("/position", methods=['PUT'])
 def reset_position():
-    requestData = request.json or {}
-    target_position = requestData.get("position", [0,0,0.1])
+    request_data = request.json or {}
+    target_position = request_data.get("position", [0,0,0.1])
     # defaults to straight up
-    target_rotation = requestData.get("rotation", [1, 0, 0, 0]) 
+    target_rotation = request_data.get("rotation", [1, 0, 0, 0]) 
     print(f"Resetting position to {target_position} @ {target_rotation}")
 
     robot_node = robot.getSelf()
@@ -128,6 +130,17 @@ def reset_position():
     return 'OK'
     
 
+@app.route("/overlay/line", methods=['PUT'])
+def put_line():
+    request_data = request.json or {}
+    
+    name = request_data['name']
+    point_1 = request_data['point_1']
+    point_2 = request_data['point_2']
+
+    draw_line(name, point_1, point_2)
+    
+    return 'OK'
 
 def build_device_map(robot):
     device_map = defaultdict(dict)
@@ -165,9 +178,9 @@ def build_device_map(robot):
 def draw_line(name: str, point_1: List[float], point_2: List[float]):
     # Create node with name if it doesn't exist yet
     node_name = f'LINE_{name}'
-    node = robot.getFromDef(node_name)
 
-    if not node:
+    if node_name not in line_map:
+        node = robot.getFromDef(node_name)
         root_node = robot.getRoot();
         root_children_field = root_node.getField("children");
 
@@ -193,10 +206,14 @@ def draw_line(name: str, point_1: List[float], point_2: List[float]):
         root_children_field.importMFNodeFromString(-1, template)
         node = robot.getFromDef(node_name)
 
-    # Update the coords based on points
-    trail_set_node = robot.getFromDef(f"{node_name}.TRAIL_LINE_SET")
-    coordinates_node = trail_set_node.getField("coord").getSFNode()
-    point_field = coordinates_node.getField("point")
+        # Update the coords based on points
+        trail_set_node = robot.getFromDef(f"{node_name}.TRAIL_LINE_SET")
+        coordinates_node = trail_set_node.getField("coord").getSFNode()
+        point_field = coordinates_node.getField("point")
+        line_map[node_name] = point_field
+    else:
+        point_field = line_map[node_name]
+
     point_field.setMFVec3f(0, point_1)
     point_field.setMFVec3f(1, point_2)
 
