@@ -137,8 +137,9 @@ def put_line():
     name = request_data['name']
     point_1 = request_data['point_1']
     point_2 = request_data['point_2']
+    color_rgb = request_data.get('color', [0, 1, 1])
 
-    draw_line(name, point_1, point_2)
+    draw_line(name, point_1, point_2, color_rgb=color_rgb)
     
     return 'OK'
 
@@ -175,7 +176,7 @@ def build_device_map(robot):
 
 # Draws a line between point_1 and point_2
 # name creates the node in the tree so we just update the same node each time
-def draw_line(name: str, point_1: List[float], point_2: List[float]):
+def draw_line(name: str, point_1: List[float], point_2: List[float], color_rgb: List[float]):
     # Create node with name if it doesn't exist yet
     node_name = f'LINE_{name}'
 
@@ -187,8 +188,7 @@ def draw_line(name: str, point_1: List[float], point_2: List[float]):
         template = f"DEF {node_name} " + """Shape {
             appearance Appearance {
                 material Material {
-                    diffuseColor 0 1 0
-                    emissiveColor 0 1 0
+                    emissiveColor """ + " ".join(map(str, color_rgb)) + """
                 }
             }
             geometry DEF TRAIL_LINE_SET IndexedLineSet {
