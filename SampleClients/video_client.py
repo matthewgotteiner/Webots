@@ -1,13 +1,18 @@
 import cv2
+from networktables import NetworkTables
 import numpy as np
 import time
 import zmq
 
-# Subscribe to the ZMQ server.
+# Subscribe to the ZMQ server to communicate with Webots.
 context = zmq.Context()
 socket = context.socket(zmq.SUB)
 socket.connect('tcp://127.0.0.1:10012')
 socket.subscribe('image')
+
+# Initialize Network Tables to communicate with the robot code.
+NetworkTables.initialize('127.0.0.1')
+visionSubsystemTable = NetworkTables.getTable('SmartDashboard/VisionSubsystem')
 
 time_prev = time.time()
 while True:
@@ -27,6 +32,9 @@ while True:
     image_mask = cv2.inRange(image_hsv, (40,10,0), (70,255,255))
     contours, _ = cv2.findContours(image_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     image_annotated = cv2.drawContours(image, contours, -1, (0,0,255), 2)
+
+    # Publish output.
+    visionSubsystemTable.putNumber('Marker Count Sent', len(contours))
 
     # Display the image.
     cv2.imshow('image', image_annotated)
