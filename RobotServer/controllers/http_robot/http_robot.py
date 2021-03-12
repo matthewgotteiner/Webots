@@ -1,6 +1,6 @@
 from typing import List
 from collections import defaultdict
-from controller import Node, Supervisor
+from controller import Node, Supervisor, TouchSensor
 from flask import Flask, request
 import itertools
 import json
@@ -70,6 +70,15 @@ def put_motors():
         for distance_sensor in device_map["DistanceSensors"].values()
     ]
 
+    bumper_touch_sensor_values = [{
+            "ID": get_device_id(bumper_touch_sensor_values),
+            "Payload": {
+                "Triggered": bumper_touch_sensor_values.getValue() == 1
+            }
+        }
+        for bumper_touch_sensor_values in device_map["BumperTouchSensors"].values()
+    ]
+
     position_sensor_values = [{
             "ID": get_device_id(position_sensor),
             "Payload": {
@@ -101,6 +110,7 @@ def put_motors():
     return json.dumps({
         "Sensors": list(itertools.chain(
             distance_sensor_values,
+            bumper_touch_sensor_values,
             position_sensor_values,
             imu_sensor_values
         )),
@@ -161,6 +171,9 @@ def build_device_map(robot):
             # Initialize the distance sensor with an update frequency
             device.enable(timestep)
             device_map["DistanceSensors"][device_id] = device
+        elif device_type == Node.TOUCH_SENSOR and device.getType() == TouchSensor.BUMPER:
+            device.enable(timestep)
+            device_map["BumperTouchSensor"][device_id] = device
         elif device_type == Node.POSITION_SENSOR:
             device.enable(timestep)
             device_map["PositionSensors"][device_id] = device
