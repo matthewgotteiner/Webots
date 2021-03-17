@@ -2,6 +2,7 @@ from typing import List
 from collections import defaultdict
 from controller import Node, Supervisor, TouchSensor
 from flask import Flask, request
+from itertools import zip_longest
 import itertools
 import json
 import logging
@@ -94,9 +95,10 @@ def put_motors():
                 "Roll": imu.getRollPitchYaw()[2],
                 "Pitch": imu.getRollPitchYaw()[1],
                 "Yaw": imu.getRollPitchYaw()[0],
+                "YawVelocity" : gyro.getValues()[2]
             }
         }
-        for imu in device_map["IMUs"].values()
+        for imu, gyro in zip_longest(device_map["IMUs"].values(), device_map["Gyros"].values())
     ]
 
     # return exact robot world pose for debugging
@@ -210,7 +212,9 @@ def build_device_map(robot):
         elif device_type == Node.CAMERA:
             device.enable(timestep)
             device_map["Cameras"][device_id] = device
-
+        elif device_type == Node.GYRO:
+            device.enable(timestep)
+            device_map["Gyros"][device_id] = device
     return device_map
 
 
