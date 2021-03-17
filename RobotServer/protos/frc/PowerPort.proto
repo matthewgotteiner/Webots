@@ -31,6 +31,34 @@ PROTO PowerPort [
                             }
                         ]
                     }
+                    Shape {
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor 0 0 0
+                                emissiveColor 0.3 1 0.3
+                                shininess 0
+                            }
+                        }
+                        geometry IndexedFaceSet {
+                            coord Coordinate {
+                                point [
+                                    0.499 0.0065 2.496
+                                    0.2493 0.0065 2.0642
+                                    -0.2493 0.0065 2.0642
+                                    -0.484 0.0065 2.496
+                                    -0.44 0.0065 2.496
+                                    -0.22 0.0065 2.115
+                                    0.22 0.0065 2.115
+                                    0.44 0.0065 2.496
+                                ]
+                            }
+                            coordIndex [
+                                0, 1, 6, 7, -1,
+                                1, 2, 5, 6, -1
+                                2, 3, 4, 5, -1
+                            ]
+                        }
+                    }
                 ]
                 physics Physics {
                     mass 1000
