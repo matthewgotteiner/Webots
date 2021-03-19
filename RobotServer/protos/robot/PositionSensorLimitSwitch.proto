@@ -1,0 +1,17 @@
+#VRML_SIM R2021a utf8
+
+PROTO PositionSensorLimitSwitch [
+  field SFString   name        "position-sensor"
+  field SFFloat    noise       0      # [0, inf)
+  field SFFloat    resolution  -1     # {-1, [0, inf)}
+  unconnectedField MFFloat limits []  # Array of positions to report as limit switches
+  unconnectedField SFFloat limitWidth 0.01 # [0,inf) 
+  unconnectedField MFString sensorNames [] # Array of device names for the limit switches
+]
+{
+    PositionSensor {
+        name IS name
+        noise IS noise
+        resolution IS resolution
+    }
+}

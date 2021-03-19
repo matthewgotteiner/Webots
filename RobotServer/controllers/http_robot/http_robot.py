@@ -89,6 +89,26 @@ def put_motors():
         for position_sensor in device_map["PositionSensors"].values()
     ]
 
+    position_sensor_limit_switch_values = []
+    for position_sensor_limit_switch in device_map["PositionSensorLimitSwitch"].values():
+        proto_node = robot.getFromDevice(position_sensor_limit_switch)
+        limits_field = proto_node.getField("limits")
+        position_sensor_name = proto_node.getField("name").getSFString()
+        sensor_names_field = proto_node.getField("sensorNames")
+        limit_width = proto_node.getField("limitWidth").getSFFloat()
+        if (limits_field.getCount() != sensor_names_field.getCount()):
+            print(f"Ignoring misconfigured sensor {position_sensor_name}")
+            continue
+        for limit_switch_index in range(limits_field.getCount()):
+            sensor_name = sensor_names_field.getMFString(limit_switch_index)
+            sensor_limit = limits_field.getMFFloat(limit_switch_index)
+            position_sensor_limit_switch_values.append({
+                "ID": sensor_name.split("#")[0].strip(), # get_device_id only works for real devices
+                "Payload": {
+                    "Triggered": position_sensor_limit_switch.getValue() > sensor_limit - limit_width / 2 and position_sensor_limit_switch.getValue() < sensor_limit + limit_width / 2
+                }
+            })
+
     imu_sensor_values =  [{
             "ID": get_device_id(imu),
             "Payload": {
@@ -114,6 +134,7 @@ def put_motors():
             distance_sensor_values,
             bumper_touch_sensor_values,
             position_sensor_values,
+            position_sensor_limit_switch_values,
             imu_sensor_values
         )),
         "WorldPose": {
@@ -206,6 +227,10 @@ def build_device_map(robot):
         elif device_type == Node.POSITION_SENSOR:
             device.enable(timestep)
             device_map["PositionSensors"][device_id] = device
+            # Handle PositionSensorLimitSwitch
+            device_node = robot.getFromDevice(device)
+            if (device_node.isProto() and device_node.getTypeName() == "PositionSensorLimitSwitch"):
+                device_map["PositionSensorLimitSwitch"][device_id] = device
         elif device_type == Node.INERTIAL_UNIT:
             device.enable(timestep)
             device_map["IMUs"][device_id] = device
