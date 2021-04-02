@@ -1,0 +1,81 @@
+#VRML_SIM R2021a utf8
+PROTO Elevator [
+  field SFInt32    CANChannel 10
+  field SFVec3f    translation 0 0 0
+  field SFRotation rotation    1 0 0 0
+  field SFFloat    maxHeight 2
+  field SFVec3f    shelfSize 0.4 0.1 0.01
+  field SFNode     shelfPhysics     Physics { 
+      mass 0.5
+      density -1
+  }
+]
+{
+    Transform {
+      translation IS translation
+      rotation IS rotation
+      children [
+        Transform {
+          translation 0 0.03  %{= fields.maxHeight.value / 2 }%
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.584314 0 0
+              }
+              geometry Box {
+                size 0.1 0.1 %{= fields.maxHeight.value }%
+              }
+            }
+          ]
+        }
+        SliderJoint {
+          jointParameters JointParameters {
+            position 0
+            minStop 0
+            maxStop IS maxHeight
+          }
+          device [
+            LinearMotor {
+                name %{= "\"Motor" .. fields.CANChannel.value .. " # Elevator sensor\"" }%
+            }
+            PositionSensor {
+              name %{= "\"CAN" .. fields.CANChannel.value .. " # Elevator sensor\"" }%
+            }
+          ]
+          endPoint Solid {
+            translation 0 0 0
+            children [
+              Transform {
+                translation 0 %{= -1 * fields.shelfSize.value.y / 2 }% 0
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                        baseColor 0 0.6 1
+                    }
+                    geometry Box {
+                      size IS shelfSize
+                    }
+                  }
+                ]
+              }
+            ]
+            boundingObject Group {
+              children [
+                Transform {
+                  translation 0 %{= -1 * fields.shelfSize.value.y / 2 }% 0
+                  children [
+                    Shape {
+                      geometry Box {
+                        size IS shelfSize
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+            physics IS shelfPhysics
+          }
+        }
+      ]
+    }
+}

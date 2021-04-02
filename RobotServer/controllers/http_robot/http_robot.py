@@ -229,7 +229,7 @@ def build_device_map(robot):
             device_map["PositionSensors"][device_id] = device
             # Handle PositionSensorLimitSwitch
             device_node = robot.getFromDevice(device)
-            if (device_node.isProto() and device_node.getTypeName() == "PositionSensorLimitSwitch"):
+            if (device_node and device_node.isProto() and device_node.getTypeName() == "PositionSensorLimitSwitch"):
                 device_map["PositionSensorLimitSwitch"][device_id] = device
         elif device_type == Node.INERTIAL_UNIT:
             device.enable(timestep)
@@ -240,6 +240,7 @@ def build_device_map(robot):
         elif device_type == Node.GYRO:
             device.enable(timestep)
             device_map["Gyros"][device_id] = device
+
     return device_map
 
 
