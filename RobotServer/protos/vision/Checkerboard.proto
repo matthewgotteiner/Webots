@@ -1,0 +1,59 @@
+#VRML_OBJ R2020b utf8
+
+PROTO Checkerboard [
+  field SFString   name        "checkerboard"
+  field SFVec3f    translation 0 0 0
+  field SFRotation rotation    1 0 0 0
+  field SFVec2f    dimensions  7 6
+]
+{
+  Solid {
+    name IS name
+    translation IS translation
+    rotation IS rotation
+    children [
+      Transform {
+        %{ width = (fields.dimensions.value.x + 2) * 0.0254 }%
+        %{ height = (fields.dimensions.value.y + 2) * 0.0254 }%
+        translation %{= width / 2 }% 0 %{= height / 2 }%
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0 0 0
+                emissiveColor 1 1 1
+                shininess 0
+              }
+            }
+            geometry Plane {
+              size %{= width }% %{= height }%
+            }
+          }
+        ]
+      }
+      %{ for i = 0, fields.dimensions.value.x do }%
+        %{ -- since we need a square in every other position from 0 to y, get half y, and then subtrat 1 from odd columns if y is odd }%
+        %{ for j = 0, ((fields.dimensions.value.y / 2) - (i % 2) * (1 - fields.dimensions.value.y % 2)) do }%
+          %{ x = (1 + i) * 0.0254 }%
+          %{ z = (1 + (j * 2) + (i % 2)) * 0.0254 }%
+          Transform {
+            translation %{= x }% 0.001 %{= z }%
+            children [
+              Shape {
+                appearance Appearance {
+                  material Material {
+                    diffuseColor 0 0 0
+                    shininess 0
+                  }
+                }
+                geometry Plane {
+                  size 0.0254 0.0254
+                }
+              }
+            ]
+          }
+        %{ end }%
+      %{ end }%
+    ]
+  }
+}
