@@ -28,7 +28,7 @@ line_map = {}
 motor_requests = {}
 
 class MotorModes(enum.Enum):
-    RAW = 0
+    POWER = 0
     VELOCITY = 1
     POSITION = 2
 
@@ -412,7 +412,7 @@ def update_motors():
                 motor.setVelocity(float(value * motor.getMaxVelocity()))
             elif mode == MotorModes.POSITION:
                 motor.setPosition(float(value))
-            elif mode == MotorModes.RAW:
+            elif mode == MotorModes.POWER:
                 motor.setForce(float(value * motor.getMaxTorque()))
             else:
                 raise Exception(f"Unhandled motor mode {mode}")
