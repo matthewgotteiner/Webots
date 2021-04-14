@@ -3,6 +3,7 @@ from collections import defaultdict
 from controller import Node, Supervisor, TouchSensor
 from flask import Flask, request
 from itertools import zip_longest
+import enum
 import itertools
 import json
 import logging
@@ -24,6 +25,12 @@ log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
 line_map = {}
+motor_requests = {}
+
+class MotorModes(enum.Enum):
+    RAW = 0
+    VELOCITY = 1
+    POSITION = 2
 
 def get_device_id(device: str):
     return device.getName().split("#")[0].strip()
@@ -53,10 +60,7 @@ def put_motors():
         request_motor_id = request_motor_values.get("id")
         motor = device_map["Motors"].get(request_motor_id)
         if motor:
-            # TODO: handle other modes of setting motor output
-            throttle_percent = request_motor_values.get("val")
-            if throttle_percent is not None:
-                motor.setVelocity(float(throttle_percent * motor.getMaxVelocity()))
+            motor_requests[request_motor_id] = request_motor_values
         else:
             raise Exception(f"No motor named {request_motor_id} found")
 
@@ -251,9 +255,8 @@ def draw_line(name: str, point_1: List[float], point_2: List[float], color_rgb: 
     node_name = f'LINE_{name}'
 
     if node_name not in line_map:
-        node = robot.getFromDef(node_name)
-        root_node = robot.getRoot();
-        root_children_field = root_node.getField("children");
+        root_node = robot.getRoot()
+        root_children_field = root_node.getField("children")
 
         template = f"DEF {node_name} " + """Shape {
             appearance Appearance {
@@ -274,7 +277,6 @@ def draw_line(name: str, point_1: List[float], point_2: List[float], color_rgb: 
             }
         }"""
         root_children_field.importMFNodeFromString(-1, template)
-        node = robot.getFromDef(node_name)
 
         # Update the coords based on points
         trail_set_node = robot.getFromDef(f"{node_name}.TRAIL_LINE_SET")
@@ -295,7 +297,6 @@ def draw_arrow(name: str, point_1: List[float], point_2: List[float], color_rgb:
     node_name = f'ARROW_{name}'
 
     if node_name not in line_map:
-        node = robot.getFromDef(node_name)
         root_node = robot.getRoot();
         root_children_field = root_node.getField("children");
 
@@ -322,7 +323,6 @@ def draw_arrow(name: str, point_1: List[float], point_2: List[float], color_rgb:
             }
         }"""
         root_children_field.importMFNodeFromString(-1, template)
-        node = robot.getFromDef(node_name)
 
         # Update the coords based on points
         trail_set_node = robot.getFromDef(f"{node_name}.TRAIL_LINE_SET")
@@ -400,6 +400,23 @@ def draw_circle(name: str, center: List[float], color_rgb: List[float], radius: 
         point_field.setMFVec3f(i, point)
     
 
+def update_motors():
+    for motor_id, request_motor_values in motor_requests.items():
+            motor = device_map["Motors"][motor_id]
+            value = request_motor_values.get("val")
+            mode = MotorModes[request_motor_values.get("mode", "velocity").upper()]
+            if mode == MotorModes.VELOCITY:
+                # this is required to renable velocity PID in case we were last on a different mode. A fancier version would latch 
+                # on changes to the mode and only set it then.
+                motor.setPosition(float("inf"))
+                motor.setVelocity(float(value * motor.getMaxVelocity()))
+            elif mode == MotorModes.POSITION:
+                motor.setPosition(float(value))
+            elif mode == MotorModes.RAW:
+                motor.setForce(float(value * motor.getMaxTorque()))
+            else:
+                raise Exception(f"Unhandled motor mode {mode}")
+
 
 def start_flask():
     global app, port
@@ -456,5 +473,8 @@ if __name__ == "__main__":
     # Run the simulation loop
     print("Starting null op simulation loop")
     while robot.step(timestep) != -1:
+        # motor updates need to happen every tick so things like raw torques are constantly applied
+        update_motors()
+        # the sleep creates space for the webserver to run more responsively
         time.sleep(timestep / 1000)
     print("Finished")
