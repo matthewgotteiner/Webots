@@ -419,25 +419,31 @@ def start_zmq():
     print(f"[HttpRobot{robotId}] Starting zmq server on tcp://{get_public_ip()}:{zmq_port}", flush=True)
 
     try:
-        import cv2
-        import numpy as np
         import zmq
 
-        camera = next(iter(device_map["Cameras"].values()))
-        image_height = camera.getHeight().to_bytes(4, byteorder='big')
-        image_width = camera.getWidth().to_bytes(4, byteorder='big')
-        image_depth = (4).to_bytes(4, byteorder='big')
-
+        # Start a ZeroMQ server.
         zmq_context = zmq.Context()
         zmq_socket = zmq_context.socket(zmq.PUB)
         zmq_socket.bind(f"tcp://0.0.0.0:{zmq_port}")
 
+        # Get the camera, and define a message template to send the image.
+        camera = next(iter(device_map["Cameras"].values()))
+        camera_depth = 4
+        message = [
+            b"image",
+            camera.getHeight().to_bytes(4, byteorder='big'),
+            camera.getWidth().to_bytes(4, byteorder='big'),
+            camera_depth.to_bytes(4, byteorder='big'),
+            None
+        ]
+
         while True:
-            image_data = bytes(camera.getImage())
-            zmq_socket.send_multipart([b"image", image_height, image_width, image_depth, image_data])
+            # Get the camera image and send the full message.
+            message[-1] = bytes(camera.getImage())
+            zmq_socket.send_multipart(message)
             
             # Sleep so we don't overload the ZMQ socket.
-            # The sleep time is correlated with framerate, but doens't seem to match it exactly.
+            # The sleep time is correlated with framerate, but doesn't seem to match it exactly.
             time.sleep(zmq_video_sleep_seconds)
 
     except:
