@@ -1,0 +1,44 @@
+
+#VRML_SIM R2021a utf8
+
+PROTO TennisBallRed [
+  field SFVec3f    translation 0 0 0
+  field SFRotation rotation    1 0 0 0
+  field SFString   name        "tennis-ball-red"
+  field SFNode     physics     Physics {
+      density -1
+      mass 0.14174762
+  }
+  field SFString   contactMaterial "tennis-ball"
+]
+{
+    Solid {
+        name IS name
+        translation IS translation
+        rotation IS rotation
+        physics IS physics
+        contactMaterial IS contactMaterial
+        children [
+            Shape {
+                geometry Sphere {
+                    radius      0.12065
+                    subdivision 5
+                }
+                appearance PBRAppearance {
+                    baseColorMap ImageTexture {
+                        url "textures/tennis-ball-red.png"
+                    }
+                    normalMap ImageTexture {
+                        url "textures/tennis-ball-normal.png"
+                    }
+                    roughness 0.9
+                    metalness 0
+                }
+            }
+        ]
+        boundingObject Sphere {
+            radius      0.12065
+            subdivision 1
+        }
+    }
+}
