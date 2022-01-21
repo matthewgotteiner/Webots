@@ -1,7 +1,7 @@
-#VRML_OBJ R2021a utf8
+#VRML_OBJ R2022a utf8
 DEF RobotTemplate Robot {
-  translation 0.8556632690850956 0.3379688491691405 -0.001431144546316765
-  rotation -0.9999999997785161 1.0812144047616406e-05 -1.8057279899421918e-05 -0.0004139079554576856
+  translation 1.327711271178832 -0.1676452794684375 0.0031176998677572287
+  rotation 0.00021013621661028126 -6.617808580745289e-05 -0.9999999757316153 0.9722689103420431
   children [
     Elevator {
       translation 0 -0.47 0.32
@@ -15,7 +15,7 @@ DEF RobotTemplate Robot {
     }
     Camera {
       translation 0 0.4953 0.5
-      rotation 1 0 0 1.5708
+      rotation 0 0 1 1.5708
       children [
         Shape {
           appearance PBRAppearance {
@@ -47,17 +47,20 @@ DEF RobotTemplate Robot {
     }
     Track {
       translation -0.3683 0 0.0712
-      rotation -0.5773509358554485 0.5773489358556708 0.5773509358554485 -2.0944
+      rotation 0.7071062811856401 -0.7071072811860378 -1.2264404877024328e-06 -3.1415853071795863
       children [
         TrackRobotWheel {
           position -0.35 0.004
+          rotation 1 0 0 0
           name "FL wheel"
         }
         TrackRobotWheel {
           position 0.35 0.004
+          rotation 1 0 0 0
           name "BL wheel"
         }
         TrackRobotWheel {
+          rotation 1 0 0 0
           name "CL wheel"
         }
       ]
@@ -118,17 +121,20 @@ DEF RobotTemplate Robot {
     }
     Track {
       translation 0.3683 0 0.0712
-      rotation -0.5773509358554485 0.5773489358556708 0.5773509358554485 -2.0944
+      rotation 0.7071062811856401 -0.7071072811860378 -1.2264404877024328e-06 -3.1415853071795863
       children [
         TrackRobotWheel {
           position -0.35 0.004
+          rotation 1 0 0 0
           name "FR wheel"
         }
         TrackRobotWheel {
           position 0.35 0.004
+          rotation 1 0 0 0
           name "BR wheel"
         }
         TrackRobotWheel {
+          rotation 1 0 0 0
           name "CR wheel"
         }
       ]
@@ -249,8 +255,13 @@ DEF RobotTemplate Robot {
       0 0 0.2
     ]
   }
+  controller "http_robot"
+  controllerArgs [
+    "1"
+    "10002"
+  ]
   supervisor TRUE
   synchronization FALSE
-  linearVelocity -1.9891152646324076e-13 4.2635895610553034e-07 3.829514245332661e-07
-  angularVelocity -2.2472649898927753e-06 -1.046483428259488e-12 -1.5551539256037048e-14
+  linearVelocity 0.00018556231155810495 0.0001897241919842403 -4.1808492889579203e-16
+  angularVelocity 4.271564277136867e-17 -9.256731991094943e-17 0.09544470566851382
 }
