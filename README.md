@@ -13,7 +13,7 @@ Visit https://cyberbotics.com/ and hit the big download button and install from 
 3. Create a new environment for webots by running these commands (say yes when prompted):
 
 ```bash
-conda create --name webots python=3
+conda create --name webots python=3.9
 conda activate webots
 ```
 
