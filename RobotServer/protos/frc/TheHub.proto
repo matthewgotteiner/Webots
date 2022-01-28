@@ -1,0 +1,71 @@
+
+#VRML_SIM R2021a utf8
+
+PROTO TheHub [
+  field SFVec3f    translation 0 0 0
+  field SFRotation rotation    1 0 0 0
+  field SFString   name        "thehub"
+]
+{
+    Solid {
+        name IS name
+        translation IS translation
+        rotation IS rotation
+        children [
+            Solid {
+                children [
+                    Transform {
+                        scale 0.001 0.001 0.001
+                        children [
+                            DEF SHAPE Shape {
+                                geometry Mesh {
+                                    url "models/The Hub ultralightweight.obj"
+                                }
+                                appearance Appearance {
+                                    material Material {
+                                        diffuseColor 0.2 0.2 0.2
+                                        specularColor 1 1 1
+                                        shininess 0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                    Shape {
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor 0 0 0
+                                emissiveColor 0.3 1 0.3
+                                shininess 0
+                            }
+                        }
+                        geometry IndexedFaceSet {
+                            coord Coordinate {
+                                point [
+                                    0.499 0.0065 2.496
+                                    0.2493 0.0065 2.0642
+                                    -0.2493 0.0065 2.0642
+                                    -0.484 0.0065 2.496
+                                    -0.44 0.0065 2.496
+                                    -0.22 0.0065 2.115
+                                    0.22 0.0065 2.115
+                                    0.44 0.0065 2.496
+                                ]
+                            }
+                            coordIndex [
+                                0, 1, 6, 7, -1,
+                                1, 2, 5, 6, -1
+                                2, 3, 4, 5, -1
+                            ]
+                        }
+                    }
+                ]
+                physics Physics {
+                    mass 1000
+                    density -1
+                    centerOfMass 0 -0.3048 0
+                }
+            }
+        ]
+    }
+}
